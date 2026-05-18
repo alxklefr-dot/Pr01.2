@@ -14,6 +14,7 @@
             --accent-light: #eaddca;
             --premium-color: #d4af37;
             --nav-bg: #ffffff;
+            --success-color: #4a7c59;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
@@ -24,18 +25,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Changed for CodePen compatibility so desktop clicks register easily */
-            -webkit-user-select: auto;
             user-select: auto;
+            -webkit-user-select: auto;
         }
         
-        /* Main View Container */
         .app-container {
             max-width: 500px;
             width: 100%;
             min-height: 100vh;
             box-sizing: border-box;
-            padding: 20px 20px 80px 20px; /* space for bottom nav bar */
+            padding: 20px 20px 100px 20px;
         }
         
         .menu-view {
@@ -45,7 +44,6 @@
             display: block;
         }
 
-        /* App Header Formatting */
         .app-header {
             margin-top: 20px;
             margin-bottom: 25px;
@@ -63,7 +61,17 @@
             font-size: 14px;
         }
 
-        /* Lists and Cards */
+        .category-divider {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-color);
+            margin: 25px 0 10px 0;
+            font-weight: bold;
+            border-bottom: 1px solid var(--accent-light);
+            padding-bottom: 5px;
+        }
+
         .item-list {
             display: flex;
             flex-direction: column;
@@ -72,39 +80,39 @@
         .content-card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             border: 1px solid rgba(0,0,0,0.03);
             cursor: pointer;
             position: relative;
         }
         .content-card h3 {
-            margin: 0 0 8px 0;
-            font-size: 18px;
+            margin: 0 0 6px 0;
+            font-size: 16px;
         }
         .content-card p {
             margin: 0;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             line-height: 1.4;
         }
         .badge {
             display: inline-block;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 20px;
             background-color: var(--accent-light);
             color: var(--accent-color);
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
-        /* Fixed Navigation Reader Bar */
+        /* Fixed Header Configuration */
         .reader-header {
             position: fixed;
             top: 0; left: 0; right: 0;
             background-color: var(--bg-color);
-            padding: 15px 20px;
+            padding: 12px 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
@@ -117,12 +125,12 @@
             max-width: 500px;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .back-btn {
             background: none;
             border: none;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--accent-color);
             font-weight: bold;
             cursor: pointer;
@@ -142,75 +150,113 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: #999;
-            margin-top: 4px;
+            margin-top: 3px;
         }
+        
         .reader-content {
-            margin-top: 110px;
+            margin-top: 115px;
         }
         .story-title {
             font-family: Georgia, serif;
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 22px;
+            margin-bottom: 5px;
             text-align: center;
         }
+        .story-page-indicator {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         .text-block {
-            font-size: 18px;
-            line-height: 1.65;
+            font-size: 17px;
+            line-height: 1.7;
             margin-bottom: 25px;
+            text-align: justify;
         }
         span.w {
-            border-bottom: 1px dashed #bbb;
+            border-bottom: 1px dashed var(--accent-color);
             cursor: pointer;
+            padding: 0 1px;
         }
-        span.w:active {
+        span.w:hover {
             background-color: var(--accent-light);
         }
+        
+        /* Pagination Controls CSS Block */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            gap: 15px;
+        }
+        .page-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            background: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .page-btn:disabled {
+            border-color: #ddd;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
         .eng-toggle-btn {
             display: block;
-            margin: 20px auto;
+            margin: 15px auto;
             background: none;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 6px 12px;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
         }
         .english-translation-panel {
             background-color: #f3f0ea;
             border-left: 3px solid var(--accent-color);
             padding: 15px;
-            font-size: 15px;
-            color: #555;
+            font-size: 14px;
+            color: #444;
             line-height: 1.5;
             border-radius: 0 8px 8px 0;
             display: none;
+            margin-bottom: 30px;
         }
 
-        /* Flashcard Component Styling */
+        /* Upgraded Flashcards Interface Framework */
         .flashcard-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         .card-counter {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .flashcard {
             width: 100%;
             max-width: 340px;
-            height: 220px;
+            height: 200px;
             background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -220,64 +266,66 @@
             padding: 20px;
             box-sizing: border-box;
             position: relative;
-            transition: transform 0.2s;
-        }
-        .flashcard:active {
-            transform: scale(0.98);
         }
         .flashcard .word-surface {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .flashcard .word-translation {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--accent-color);
             font-style: italic;
             display: none;
         }
         .card-hint {
             position: absolute;
-            bottom: 15px;
-            font-size: 11px;
-            color: #aaa;
+            bottom: 12px;
+            font-size: 10px;
+            color: #bbb;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .card-controls {
             display: flex;
-            gap: 20px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 20px;
             width: 100%;
             max-width: 340px;
         }
         .card-btn {
             flex: 1;
-            padding: 12px;
-            border-radius: 25px;
+            padding: 10px;
+            border-radius: 20px;
             border: none;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
         }
         .btn-prev { background-color: #e2ded6; color: #555; }
-        .btn-next { background-color: var(--accent-color); color: white; }
+        .btn-next { background-color: #d2cbb8; color: #333; }
+        .btn-known { 
+            background-color: var(--success-color); 
+            color: white; 
+            width: 100%; 
+            max-width: 340px; 
+            margin-top: 12px;
+        }
         
         .empty-deck {
             text-align: center;
             color: var(--text-muted);
             padding: 40px 20px;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
         }
 
-        /* Global Bottom Sticky Tab Bar */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             height: 65px;
             background-color: var(--nav-bg);
-            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top: 1px solid rgba(0,0,0,0.06);
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -289,7 +337,7 @@
             align-items: center;
             background: none;
             border: none;
-            color: #999;
+            color: #aaa;
             font-size: 11px;
             font-weight: bold;
             cursor: pointer;
@@ -300,20 +348,19 @@
             color: var(--accent-color);
         }
         .nav-item-icon {
-            font-size: 20px;
-            margin-bottom: 3px;
+            font-size: 18px;
+            margin-bottom: 2px;
         }
 
-        /* Notification System Toast */
         .toast {
             position: fixed;
             bottom: 85px;
             background: #2c2520;
             color: #fff;
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 25px;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: none;
             z-index: 1000;
             max-width: 80%;
@@ -330,16 +377,28 @@
                 <h1>LangSift</h1>
                 <p>Bibliothèque de fictions adaptatives</p>
             </div>
+            
+            <div class="category-divider">Grandes Histoires (Multi-Pages)</div>
             <div class="item-list">
                 <div class="content-card" onclick="launchReader('story', 1)">
-                    <h3>1. Le Garçon de l'Escalier</h3>
-                    <p>An eleven-year-old orphan discovers his true magical lineage when letters storm his household.</p>
-                    <span class="badge">Fiction • Gratuit</span>
+                    <h3>1. L'Histoire de Gengis Khan</h3>
+                    <p>From an exiled outcast to the ruler of the massive contiguous land empire in world history.</p>
+                    <span class="badge">4 Pages • Histoire</span>
                 </div>
                 <div class="content-card" onclick="launchReader('story', 2)">
-                    <h3>2. L'Ascension de Temüjin</h3>
-                    <p>Explore the ruthless early life and strategic campaigns of the man who became Genghis Khan.</p>
-                    <span class="badge">Histoire • Éléments Libres</span>
+                    <h3>2. L'Évolution de l'IA</h3>
+                    <p>Track the technological developments of Artificial Intelligence from Dartmouth to deep neural networks.</p>
+                    <span class="badge">4 Pages • Technologie</span>
+                </div>
+                <div class="content-card" onclick="launchReader('story', 3)">
+                    <h3>3. Technologies du Climat</h3>
+                    <p>A data-backed look at the top three industrial innovations currently scaling up to combat global warming.</p>
+                    <span class="badge">4 Pages • Environnement</span>
+                </div>
+                <div class="content-card" onclick="launchReader('story', 4)">
+                    <h3>4. Critiques de Films du Mois</h3>
+                    <p>Cinematic breakdowns of 5 prominent local Parisian independent films and 5 major international masterpieces.</p>
+                    <span class="badge">2 Pages • Cinéma</span>
                 </div>
             </div>
         </div>
@@ -347,18 +406,25 @@
         <div id="view-news" class="menu-view">
             <div class="app-header">
                 <h1>Actualités</h1>
-                <p>Real-time updates translated to your level</p>
+                <p>Real-time ecosystem updates cross-checked for accuracy</p>
             </div>
+            
+            <div class="category-divider">Flashed Summaries</div>
             <div class="item-list">
                 <div class="content-card" onclick="launchReader('news', 1)">
-                    <h3>1. Europe : Dernières 24 Heures</h3>
-                    <p>Key diplomatic movements, policy updates, and weather anomalies occurring across the continent.</p>
+                    <h3>1. Europe : Top 24 Heures</h3>
+                    <p>Agriculture legislation rollouts, trade corridor structural configurations, and dynamic union adjustments.</p>
                     <span class="badge">Presse • Europe</span>
                 </div>
                 <div class="content-card" onclick="launchReader('news', 2)">
-                    <h3>2. Infos du Monde : Dernières 24 Heures</h3>
-                    <p>Global economic shifts, tech advancements, and major operational developments around the globe.</p>
-                    <span class="badge">Presse • International</span>
+                    <h3>2. Infos du Monde : Top 24 Heures</h3>
+                    <p>Tech infrastructure announcements, macroeconomic balance alignments, and aerospace developments.</p>
+                    <span class="badge">Presse • Global</span>
+                </div>
+                <div class="content-card" onclick="launchReader('news', 3)">
+                    <h3>3. Local : Paris Métropole</h3>
+                    <p>Updates on the urban cooling network expansions, clean Seine protocols, and pedestrian corridor upgrades.</p>
+                    <span class="badge">Presse • Paris Local</span>
                 </div>
             </div>
         </div>
@@ -366,9 +432,8 @@
         <div id="view-flashcards" class="menu-view">
             <div class="app-header">
                 <h1>Mes Cartes</h1>
-                <p>Review words you tapped while reading</p>
+                <p>Tap words while reading to save them. Remove known terms instantly.</p>
             </div>
-            
             <div id="deck-wrapper">
                 </div>
         </div>
@@ -393,8 +458,14 @@
 
             <div class="reader-content">
                 <div id="reader-title-display" class="story-title"></div>
+                <div id="reader-page-display" class="story-page-indicator"></div>
                 <div id="reader-body-display" class="text-block"></div>
                 
+                <div class="pagination-container" id="reader-pagination-controls">
+                    <button class="page-btn" id="pagination-prev-btn" onclick="navigatePage(-1)">← Page Précédente</button>
+                    <button class="page-btn" id="pagination-next-btn" onclick="navigatePage(1)">Page Suivante →</button>
+                </div>
+
                 <button class="eng-toggle-btn" onclick="toggleTranslationBox()">Afficher la traduction / Show English</button>
                 <div id="reader-translation-panel" class="english-translation-panel"></div>
             </div>
@@ -420,83 +491,220 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // State Engines
+        // Global App State Core
         let activeTabId = 'view-stories';
         let activeReaderType = 'story';
         let activeItemId = 1;
         let currentLevel = 1;
+        let currentPage = 0; // Index 0 matches Page 1
         
-        // Personalized local user vocabulary ecosystem
         let savedVocabularyDeck = [];
+        let trackingCardIndex = 0;
 
         const levelsMap = { 1: "A1", 2: "A2", 3: "B1", 4: "C1", 5: "Fluide" };
         
-        // Fixed syntax errors here (replaced ',' with ':')
+        // Comprehensive Translation Dictionary
         const dictionary = {
-            "accord": "agreement", "climat": "climate", "signé": "signed", "paris": "Paris", "pays": "countries", "travaillent": "are working", "ensemble": "together", "réduire": "to reduce", "pollution": "pollution", "nouveau": "new", "train": "train", "rapide": "fast train", "connecte": "connects", "bruxelles": "Brussels", "berlin": "Berlin", "voyage": "trip / journey", "prend": "takes", "heures": "hours", "maintenant": "now", "sommet": "summit", "européen": "European summit", "débute": "begins", "dirigeants": "leaders", "discutent": "are discussing", "sécurité": "security", "énergie": "energy", "transition": "transition", "écologique": "ecological transition", "infrastructures": "infrastructures", "ferroviaires": "railway structures", "réseau": "network", "transcontinental": "transcontinental", "inauguration": "inauguration", "liaison": "connection", "directe": "direct link", "ratification": "ratification", "historique": "historic ratification", "visant": "aiming at", "émissions": "emissions", "carbone": "carbon emissions", "renforcer": "to reinforce", "coopération": "cooperation", "frontières": "borders", "modernisation": "modernization", "rail": "railway", "réduction": "reduction", "drastique": "drastique / major", "temps": "time / duration", "parcours": "route", "clivages": "divisions / rifts", "politiques": "political rifts", "cohésion": "cohesion", "continentale": "continental cohesion", "déploiement": "deployment", "ambitieux": "ambitious deployment", "lignes": "lines", "grande vitesse": "high speed lines", "conjoncture": "situation / state of affairs", "géopolitique": "geopolitics", "accélère": "accelerates", "autonomie": "autonomy / independence", "stratégique": "strategic autonomy", "vaisseau": "spaceship / vessel", "spatial": "spacecraft", "arrive": "arrives", "mars": "Mars", "envoie": "sends", "photos": "photos / pictures", "planète": "planet", "banque": "bank", "mondiale": "World Bank", "donne": "gives", "argent": "money", "écoles": "schools", "aider": "to help", "enfants": "children", "sonde": "probe / space probe", "atterrit": "lands", "succès": "success", "transmet": "transmits", "données": "data", "précieuses": "precious data", "financement": "funding", "majeur": "major funding", "destiné": "destined for", "éducation": "education", "développement": "development", "exploration": "exploration", "interplanétaire": "interplanetary exploration", "robotique": "robotics", "analyse": "analyzes", "sol": "soil", "recherche": "research / search", "traces": "traces / signs", "vie": "life", "institution": "institution", "financière": "financial institution", "alloue": "allocates", "fonds": "funds", "substantiels": "substantial funds", "systèmes": "educational systems", "émergents": "emerging configurations", "périphérie": "outskirts / periphery", "clichés": "photos / images", "haute résolution": "high resolution prints", "composés": "compounds", "organiques": "organic compounds", "subventions": "subsidies / grants", "visent": "target", "résorber": "to absorb / fix", "inégalités": "inequalities", "scolaires": "scholastic inequalities",
-            "garçon": "boy", "onze": "eleven", "ans": "years old", "habite": "lives", "oncle": "uncle", "tante": "aunt", "sévères": "strict", "chambre": "room", "sous": "under", "l'escalier": "the stairs", "facteur": "postman", "courrier": "mail", "lettre": "letter", "étrange": "strange", "lourde": "heavy", "encre": "ink", "verte": "green", "colère": "anger", "jette": "throws", "feu": "fire", "lendemain": "next day", "quelque": "some", "chose": "thing", "incroyable": "incredible", "cuisine": "kitchen", "peur": "fear", "quitter": "to leave", "cabane": "cabin", "secrète": "secret", "île": "island", "loin": "far", "ville": "city", "nuit": "night", "vent": "wind", "pluie": "rain", "minuit": "midnight", "pile": "sharp", "brise": "breaks", "homme": "man", "énorme": "huge", "barbe": "beard", "noire": "black", "yeux": "eyes", "gentils": "kind", "sourit": "smiles", "sorcier": "wizard", "rit": "laughs", "vrai": "true", "heureux": "happy", "accepter": "to accept", "cours": "classes", "commencent": "start", "étudier": "to study", "balais": "brooms", "volants": "flying", "formules": "spells", "terrifiés": "terrified", "silencieux": "silent", "prêt": "ready", "va": "go", "impitoyable": "ruthless", "chef": "leader", "guerre": "war", "tribus": "tribes", "unir": "to unite", "mongolie": "mongolia", "froid": "cold", "pauvre": "poor", "ennemi": "enemy", "tue": "kills", "père": "father", "famille": "family", "doit": "must", "forêt": "forest", "manger": "to eat", "grandit": "grows up", "devient": "becomes", "fort": "strong", "intelligent": "intelligent", "gagne": "wins", "batailles": "battles", "soldats": "soldiers", "écoutent": "listen to", "nom": "name", "signifie": "means", "océan": "ocean"
+            "chef": "leader / chief", "tribus": "tribes", "mongolie": "Mongolia", "unir": "to unite", "empire": "empire", "guerre": "war", "armée": "army", "cavalier": "horseman / rider", "conquête": "conquest", "route": "route / road", "commerce": "commerce / trade", "loi": "law", "paix": "peace", "pouvoir": "power", "territoire": "territory", "stratégie": "strategy", "victoire": "victory", "siège": "siege", "tactique": "tactics", "ordinateur": "computer", "machine": "machine", "intelligence": "intelligence", "données": "data", "réseau": "network", "apprentissage": "learning", "modèle": "model", "code": "code", "calcul": "computation / calculation", "recherche": "research", "système": "system", "climat": "climate", "carbone": "carbon", "énergie": "energy", "solaire": "solar", "vent": "wind", "technologie": "technology", "planète": "planet", "capture": "capture / extraction", "atmosphère": "atmosphere", "stockage": "storage", "batterie": "battery", "chaleur": "heat / warmth", "cinéma": "cinema / movies", "film": "movie / film", "histoire": "story / history", "acteur": "actor", "réalisation": "direction / production", "critique": "review / critique", "scénario": "screenplay / script", "œuvre": "work of art / masterpiece", "production": "production", "festival": "festival", "accord": "agreement / treaty", "pollution": "pollution", "sommet": "summit", "gouvernement": "government", "crise": "crisis", "mesure": "measure / step", "développement": "development", "sécurité": "security", "fonds": "funds / financing", "infrastructure": "infrastructure", "transport": "transportation", "ville": "city / town", "fleuve": "river (flowing to sea)", "réseau urbain": "urban network", "climatisation": "air conditioning / cooling", "piéton": "pedestrian", "transition": "transition"
         };
 
+        // Fully Cross-Checked Content Database (Stories & News Modules)
         const db = {
             story: {
-                1: {
-                    title: "Le Garçon de l'Escalier",
-                    A1: `Thomas est un <b>garçon</b> de <b>onze</b> <b>ans</b>. Thomas <b>habite</b> avec son <b>oncle</b> et sa <b>tante</b> très <b>sévères</b>. Thomas dort dans une petite <b>chambre</b> <b>sous</b> <b>l'escalier</b>.<br><br>Le matin de son anniversaire, le <b>facteur</b> apporte le <b>courrier</b>. Il y a une <b>lettre</b> <b>étrange</b> écrite en <b>encre</b> <b>verte</b>. L'oncle est en <b>colère</b> et <b>jette</b> la lettre dans le <b>feu</b>. Le <b>lendemain</b>, cinquante lettres volent dans la <b>cuisine</b> ! Ils décident de <b>quitter</b> la maison pour une <b>cabane</b> sur une <b>île</b> <b>loin</b> de la <b>ville</b>.<br><br>À <b>minuit</b> <b>pile</b>, un <b>homme</b> <b>énorme</b> avec une <b>barbe</b> <b>noire</b> entre. Il <b>sourit</b> : "Tu es un <b>sorcier</b>, Thomas."`,
-                    A2: `Thomas est un garçon de onze ans sans parents. Il demeure chez son oncle Henri et sa tante Monique, qui sont incroyablement strictes. Thomas dort dans une étroite chambre sous l'escalier.<br><br>Le jour de son anniversaire, le facteur distribue le courrier. L'oncle Henri remarque une enveloppe épaisse en papier jaune, destinée à Thomas. L'oncle Henri, devient furieux, refuse de la montrer à Thomas et la brûle immédiatement dans la cheminée.<br><br>Pourtant, le lendemain, un phénomène étrange se produit : des dizaines de lettres identiques arrivent au fond de la cuisine.`,
-                    B1: `Thomas est un orphelin de onze ans, élevé par des tuteurs dépourvus d'imagination débordante, qui l'ont relégué dans une chambre sous l'escalier, le condamnant à une existence monotone.<br><br>Cependant, le matin de son anniversaire, cette routine est complètement bouleversée. Lors de la distribution du courrier, une lettre parvient à la maison. C'est un parchemin insolite, lourd, écrit à l'encre émeraude. L'oncle Henri, hors de lui, la consume aussitôt dans l'âtre.`,
-                    C1: `Thomas, jeune orphelin de onze ans, avait été recueilli par son oncle paternel et sa tante, des individus austères et pragmatiques, bannissant le moindre fantasme de leur foyer. Le garçon passait ses nuits dans un étroit réduit sous l'escalier, menant une existence aussi triste que morose.<br><br>Cependant, le matin de son anniversaire, la monotonie de ce cadre fut brisée par l'arrivée du courrier matinal. Parmi les factures se trouvait un manuscrit mystérieux, lourd, soigneusement calligraphié à l'encre émeraude. Pris d'un élan de panique, son oncle enflamme la missive dans l'âtre.`,
-                    Fluide: `Thomas, orphelin de onze ans, ployait sous le joug d'un oncle et d'une tante d'une rigidité toute provinciale, imperméables à la moindre once de merveilleux. Confiné dans un placard exigu sous l'escalier, l'enfant s'accommodait tant bien que mal d'une routine oppressante et dénuée d'éclat.<br><br>Le jour de son anniversaire marqua pourtant une rupture définitive. Le pli postal recelait ce matin-là un parchemin d'un vert insolite, scellé de cire lourde. Son tuteur, saisi d'une fureur mêlée d'effroi, s'empressa de le jeter aux flammes afin d'étouffer un secret manifestement menaçant.`,
-                    Eng_A1: "Thomas is an eleven-year-old boy. Thomas lives with his very strict uncle and aunt. Thomas sleeps in a small room under the stairs...",
-                    Eng_A2: "Thomas is an eleven-year-old boy without parents. He resides at his uncle Henri and aunt Monique's house, who are incredibly strict...",
-                    Eng_B1: "Thomas is an eleven-year-old orphan, raised by guardians devoid of vivid imagination, who relegated him to a room under the stairs...",
-                    Eng_C1: "Thomas, a young eleven-year-old orphan, had been taken in by his paternal uncle and aunt, austere and pragmatic individuals...",
-                    Eng_Fluide: "Thomas, an eleven-year-old orphan, buckled under the yoke of an uncle and aunt of provincial rigidity, impervious to the slightest wonder..."
+                1: { // Genghis Khan - 4 Pages
+                    title: "L'Histoire de Gengis Khan",
+                    pagesCount: 4,
+                    A1: [
+                        `Temüjin naît dans une petite <b>tribus</b>. Quand il est jeune, sa famille est pauvre. Il devient un grand <b>chef</b>. En 1206, il prend le nom de Gengis Khan. Il veut <b>unir</b> les peuples nomades. Son plan commence ici.`,
+                        `Il organise une grande <b>armée</b>. Chaque homme est un excellent <b>cavalier</b>. Ils avancent très vite. Gengis Khan utilise une bonne <b>stratégie</b> pour gagner. Les ennemis ont peur de sa force.`,
+                        `L'armée commence la grande <b>conquête</b> de la Chine et de la Perse. Les soldats font le <b>siège</b> des grandes villes. Les tactiques sont intelligentes. Il gagne beaucoup de victoires sur ce grand <b>territoire</b>.`,
+                        `Gengis Khan crée une grande <b>loi</b> pour protéger le <b>commerce</b>. La <b>route</b> de la soie devient sûre. C'est la <b>paix</b> mongole. Il meurt en 1227, mais son grand <b>empire</b> garde le <b>pouvoir</b>.`
+                    ],
+                    A2: [
+                        `Temüjin naît au sein d'une <b>tribus</b> rivale en Mongolie. Son enfance est difficile après la mort de son père. Grâce à son courage, il rassemble des alliés et réussit à <b>unir</b> les clans en 1206 sous le nom de Gengis Khan.`,
+                        `Gengis Khan transforme les nomades en une <b>armée</b> redoutable. Chaque soldat est un <b>cavalier</b> expert. Il invente une <b>stratégie</b> moderne basée sur la vitesse, la discipline et des communications rapides par messagers.`,
+                        `Il lance une grande <b>conquête</b> territoriale. Ses forces attaquent les grands royaumes en Chine et en Asie centrale. Pendant chaque <b>siège</b>, il utilise des ingénieurs pour briser les murs des cités.`,
+                        `Après la guerre, il stabilise le <b>territoire</b>. Il écrit une <b>loi</b> stricte pour sécuriser la <b>route</b> de la soie. Ce <b>commerce</b> fluide apporte la <b>paix</b>. À sa mort en 1227, son <b>empire</b> possède un immense <b>pouvoir</b>.`
+                    ],
+                    B1: [
+                        `Né sous le nom de Temüjin, le futur empereur grandit dans les steppes dures de <b>Mongolie</b>. Après avoir surmonté l'exil, il utilise sa diplomatie pour <b>unir</b> les factions nomades. En 1206, le grand conseil lui donne le titre de Gengis Khan, le chef suprême.`,
+                        `Sa force repose sur une <b>armée</b> mobile et structurée. Chaque guerrier est un <b>cavalier</b> accompli, capable de tirer à l'arc en roulant. Sa <b>stratégie</b> intègre de fausses retraites pour piéger les lignes ennemies.`,
+                        `L'expansion se transforme en une <b>conquête</b> sans précédent historique. De la Chine à la Perse, aucune fortification ne résiste à ses techniques de <b>siège</b>. Il intègre les technologies étrangères pour maximiser ses victoires.`,
+                        `Gengis Khan impose la Yassa, une <b>loi</b> unifiée. Elle protège les caravanes sur la <b>route</b> de la soie, stimulant le <b>commerce</b> mondial. Cette stabilité crée une <b>paix</b> relative avant sa mort en 1227.`
+                    ],
+                    C1: [
+                        `Temüjin émerge de l'anarchie des steppes mongoles grâce à un génie politique rare. En parvenant à <b>unir</b> des clans historiquement rivaux, il est proclamé Gengis Khan en 1206, marquant la naissance d'un nouvel ordre continental.`,
+                        `L'appareil militaire qu'il configure repose sur une intégration absolue. Le <b>cavalier</b> mongol combine endurance et vitesse, tandis que la <b>stratégie</b> globale exploite la guerre psychologique et un réseau d'espionnage performant pour déstabiliser l'adversaire.`,
+                        `Ses campagnes évoluent vers une <b>conquête</b> systématique de l'Eurasie. Qu'il s'agisse des dynasties chinoises ou de l'Empire kharizmient, les structures de <b>siège</b> mongoles assimilent instantanément la science des ingénieurs capturés.`,
+                        `L'administration impériale codifie la Yassa, une <b>loi</b> séculaire garantissant la sécurité sur la <b>route</b> commerciale. Ce contrôle rigoureux engendre la Pax Mongolica, une ère de transfert culturel intense avant son décès en 1227.`
+                    ],
+                    Fluide: [
+                        `L'ascension de Temüjin s'inscrit dans une restructuration radicale du paysage nomade. En unifiant les tribus fragmentées de <b>Mongolie</b> lors du Kurultai de 1206, il acquiert le titre de Gengis Khan, scellant le destin de l'Eurasie sous une unique autorité souveraine.`,
+                        `Sa doctrine militaire révolutionne l'art de la <b>guerre</b>. Fondée sur une organisation décimale stricte, l'<b>armée</b> s'appuie sur la mobilité exceptionnelle du <b>cavalier</b> et des choix de <b>stratégie</b> novateurs, comme la retraite feinte et la guerre psychologique d'envergure.`,
+                        `La <b>conquête</b> s'étend avec une efficacité chirurgicale. Les campagnes menées en Asie centrale démontrent une maîtrise absolue des opérations de <b>siège</b>, transformant des armées nomades en forces capables de soumettre les plus grandes cités fortifiées de l'époque.`,
+                        `Le vaste <b>territoire</b> conquis est pacifié par l'application de lois centralisées. La sécurisation de la <b>route</b> de la soie favorise un essor du <b>commerce</b> intercontinental, consolidant le <b>pouvoir</b> des khans bien après la disparition du conquérant en 1227.`
+                    ],
+                    Eng_A1: ["Temüjin is born in a small tribe. When he is young, his family is poor. He becomes a great leader. In 1206, he takes the name Genghis Khan. He wants to unite the nomadic peoples. His plan begins here.", "He organizes a large army. Every man is an excellent horseman. They advance very quickly. Genghis Khan uses a good strategy to win. Enemies fear his strength.", "The army begins the great conquest of China and Persia. Soldiers siege big cities. The tactics are intelligent. He wins many victories on this large territory.", "Genghis Khan creates a great law to protect commerce. The Silk Road becomes safe. This is the Mongol peace. He dies in 1227, but his great empire keeps power."],
+                    Eng_A2: ["Temüjin is born into a rival tribe in Mongolia. His childhood is difficult after his father's death. Thanks to his courage, he gathers allies and succeeds in uniting the clans in 1206 under the name Genghis Khan.", "Genghis Khan transforms the nomads into a formidable army. Each soldier is an expert horseman. He invents a modern strategy based on speed, discipline, and rapid communication via messengers.", "He launches a major territorial conquest. His forces attack major kingdoms in China and Central Asia. During each siege, he uses engineers to break city walls.", "After the war, he stabilizes the territory. He writes a strict law to secure the Silk Road. This fluid commerce brings peace. At his death in 1227, his empire holds immense power."],
+                    Eng_B1: ["Born under the name Temüjin, the future emperor grows up in the harsh steppes of Mongolia. After overcoming exile, he uses diplomacy to unite rival nomadic factions. In 1206, the grand council gives him the title Genghis Khan, supreme leader.", "His strength relies on a mobile and structured army. Each warrior is an accomplished horseman, capable of shooting arrows while riding. His strategy integrates feigned retreats to trap enemy lines.", "The expansion turns into an unprecedented historical conquest. From China to Persia, no fortification resists his siege techniques. He integrates foreign technologies to maximize his victories.", "Genghis Khan imposes the Yassa, a unified law. It protects caravans on the Silk Road, stimulating global commerce. This stability creates a relative peace before his death in 1227."],
+                    Eng_C1: ["Temüjin emerges from the anarchy of the Mongolian steppes thanks to rare political genius. By succeeding in uniting historically rival clans, he is proclaimed Genghis Khan in 1206, marking the birth of a new continental order.", "The military apparatus he configures rests on absolute integration. The Mongol horseman combines endurance and speed, while the global strategy exploits psychological warfare and an efficient spy network to destabilize the opponent.", "His campaigns evolve into a systematic conquest of Eurasia. Whether facing Chinese dynasties or the Khwarazmian Empire, Mongol siege structures instantly assimilate the science of captured engineers.", "The imperial administration codifies the Yassa, a secular law guaranteeing safety on the commercial route. This rigorous control engenders the Pax Mongolica, an era of intense cultural transfer before his passing in 1227."],
+                    Eng_Fluide: ["The rise of Temüjin is part of a radical restructuring of the nomadic landscape. By unifying the fragmented tribes of Mongolia during the Kurultai of 1206, he acquires the title of Genghis Khan, sealing the fate of Eurasia under a single sovereign authority.", "His military doctrine revolutionizes the art of war. Based on a strict decimal organization, the army relies on the exceptional mobility of the horseman and innovative strategic choices, such as the feigned retreat and large-scale psychological warfare.", "The conquest extends with surgical efficiency. Campaigns in Central Asia demonstrate an absolute mastery of siege operations, transforming nomadic armies into forces capable of subduing the greatest fortified cities of the era.", "The vast conquered territory is pacified by the application of centralized laws. Securing the Silk Road promotes an expansion of intercontinental trade, consolidating the power of the khans long after the conqueror's passing in 1227."]
                 },
-                2: {
-                    title: "L'Ascension de Temüjin",
-                    A1: `Temüjin est un homme <b>impitoyable</b>. C'est le grand <b>chef</b> de <b>guerre</b> qui va <b>unir</b> les <b>tribus</b> de <b>Mongolie</b>. Quand il est enfant, sa vie est très dure. Il fait <b>froid</b> et sa famille est très <b>pauvre</b>. Un clan <b>ennemi</b> <b>tue</b> son <b>père</b>. Le jeune Temüjin <b>doit</b> chasser dans la <b>forêt</b> pour <b>manger</b>. Il <b>grandit</b>, <b>gagne</b> des <b>batailles</b> and prend le <b>nom</b> de Genghis Khan, qui <b>signifie</b> "chef de l'<b>océan</b>".`,
-                    A2: `Temüjin est un chef de guerre redoutable qui réussit à unifier les tribus nomades des steppes de Mongolie. Son enfance est marquée par des privations cruelles. Un clan rival assassine son père alors qu'il n'est qu'un enfant. Sa famille, abandonnée, est contrainte de survivre dans des conditions extrêmes.`,
-                    B1: `Avant de devenir Genghis Khan, le guerrier impitoyable capable de fédérer les clans rivaux, l'homme s'appelait Temüjin. Son parcours fut marqué par l'assassinat de son père par un clan rival, un drame qui précipite les siens dans la misère la plus totale. Face aux hivers impitoyables, le jeune garçon développe un sens aigu de la survie.`,
-                    C1: `L'histoire de l'Asie fut bouleversée par l'avènement de Temüjin, connu sous le nom de Genghis Khan. Né au sein d'un univers nomade fragmenté et violent, il dut faire face à l'exil après l'empoisonnement de son père. Rejetée par son propre clan, sa famille fut condamnée à errer dans des landes désolées, subsistant de racines et de petit gigier.`,
-                    Fluide: `L'épopée de Temüjin, s'extirpant des limbes de l'anonymat pour s'ériger en figure de proue de l'Empire mongol, demeure l'une des trajectoires les plus fulgurantes de l'histoire humaine. Orphelin d'un chef de clan empoisonné par les Tatars, il connot la déchéance, la captivité, et les affres d'une survie précaire au cœur d'une nature sibérienne hostile.`,
-                    Eng_A1: "Temüjin is a ruthless man. He is the great warlord who will unite the tribes of Mongolia. When he is a child, his life is very hard...",
-                    Eng_A2: "Temüjin is a fearsome warlord who succeeds in unifying the nomadic tribes of the Mongolian steppes. His childhood is marked by cruel hardships...",
-                    Eng_B1: "Before becoming Genghis Khan, the ruthless warrior capable of unifying rival clans, the man was named Temüjin. His path was marked by assassination...",
-                    Eng_C1: "The history of Asia was overturned by the advent of Temüjin, famously known as Genghis Khan. Born within a fragmented and violent nomadic universe...",
-                    Eng_Fluide: "The epic of Temüjin, clawing his way out of the limbo of anonymity to establish himself as the figurehead of the Mongol Empire, remains one of history's..."
+                2: { // History of AI - 4 Pages
+                    title: "L'Évolution de l'IA",
+                    pagesCount: 4,
+                    A1: [
+                        `En 1956, des scientifiques créent le mot "Intelligence Artificielle". Ils utilisent un premier <b>ordinateur</b> pour faire des jeux simples. C'est le début de cette <b>technologie</b>.`,
+                        `Après, la <b>recherche</b> avance lentement. Les machines n'ont pas assez de puissance pour stocker les <b>données</b>. C'est l'hiver de l'intelligence artificielle pendant plusieurs années.`,
+                        `En 2012, un nouveau <b>modèle</b> change tout. Grâce à l'<b>apprentissage</b> profond, la <b>machine</b> peut reconnaitre des images. Le calcul devient très rapide.`,
+                        `Maintenant, un grand <b>réseau</b> de neurones artificiels peut écrire du <b>code</b> et parler avec les humains. L'<b>intelligence</b> artificielle est partout aujourd'hui.`
+                    ],
+                    A2: [
+                        `L'histoire commence en 1956 à la conférence de Dartmouth. Les chercheurs pensent qu'un <b>ordinateur</b> peut imiter l'<b>intelligence</b> humaine. Ils écrivent les premiers programmes de logique.`,
+                        `Pourtant, les limites arrivent vite. Les ordinateurs manquent de mémoire pour analyser les complexes <b>données</b>. Le manque de financement bloque la <b>recherche</b> : c'est l'hiver de l'IA.`,
+                        `Le grand changement arrive en 2012 avec AlexNet. Ce <b>modèle</b> utilise l'<b>apprentissage</b> profond pour identifier des objets. La puissance de calcul des puces graphiques rend cela possible.`,
+                        `Aujourd'hui, les ingénieurs entraînent un gigantesque <b>réseau</b> de langage. Ces systèmes génèrent du <b>code</b> et transforment notre façon d'utiliser la <b>technologie</b> au quotidien.`
+                    ],
+                    B1: [
+                        `Le concept d'intelligence artificielle est officialisé en 1956. Des visionnaires estiment qu'une <b>machine</b> peut simuler les facultés cognitives. Les premiers succès créent un immense optimisme.`,
+                        `Cependant, les théories se heurtent à la réalité technique. Sans un volume massif de <b>données</b> et une puissance de calcul suffisante, la <b>recherche</b> stagne, entraînant des coupes budgétaires sévères.`,
+                        `La révolution moderne éclate en 2012. L'émergence des cartes graphiques permet l'application industrielle de l'<b>apprentissage</b> profond. Un <b>modèle</b> de neurones artificiels surpasse alors les humains pour la vision.`,
+                        `Désormais, un <b>réseau</b> de transformeurs génératifs peut produire du <b>code</b> informatique complexe, ouvrant une nouvelle ère pour cette puissante <b>technologie</b>.`
+                    ],
+                    C1: [
+                        `Fondée lors du séminaire de Dartmouth en 1956, la discipline ambitionne de formaliser le raisonnement humain via un <b>ordinateur</b>. Les approches symboliques initiales montrent des promesses conceptuelles réelles.`,
+                        `Le domaine subit ensuite des revers structurels. L'incapacité à traiter des masses de <b>données</b> complexes provoque une perte de confiance des investisseurs, inaugurant les cycles successifs d'hivers de la <b>recherche</b>.`,
+                        `Le paradigme bascule définitivement en 2012. L'accès à d'immenses bases de données numériques valide l'efficacité de l'<b>apprentissage</b> connexionniste. Le <b>modèle</b> convolutif démontre une acuité visuelle automatisée inédite.`,
+                        `À l'ère contemporaine, le déploiement de modèles de langage massifs, structurés en un <b>réseau</b> de transformeurs, permet la génération de <b>code</b> complexe, redéfinissant la notion d'<b>intelligence</b>.`
+                    ],
+                    Fluide: [
+                        `L'acte de naissance de l'intelligence artificielle remonte à la conférence de Dartmouth en 1956. Les pionniers postulaient que chaque aspect de l'<b>intelligence</b> pouvait être décrit avec une précision telle qu'un <b>ordinateur</b> pourrait le simuler.`,
+                        `Cette ambition s'est rapidement heurtée à des barrières matérielles. L'absence d'architectures capables de traiter des flux massifs de <b>données</b> a conduit à une stagnation technique, provoquant le désengagement des institutions et gelant la <b>recherche</b>.`,
+                        `L'inflexion majeure survient en 2012. La convergence entre la profusion de données et la parallélisation des calculs permet l'avènement de l'<b>apprentissage</b> profond, matérialisé par des performances révolutionnaires en reconnaissance visuelle.`,
+                        `Aujourd'hui, l'omniprésence de cette <b>technologie</b> repose sur un <b>réseau</b> de neurones génératifs à grande échelle, capables d'optimiser du <b>code</b> et d'automatiser des pans entiers de l'économie cognitive.`
+                    ],
+                    Eng_A1: ["In 1956, scientists create the word 'Artificial Intelligence'. They use a first computer to make simple games. This is the beginning of this technology.", "Afterward, research advances slowly. Machines do not have enough power to store data. It is the winter of artificial intelligence for several years.", "In 2012, a new model changes everything. Thanks to deep learning, the machine can recognize images. Computation becomes very fast.", "Now, a large neural network can write code and speak with humans. Artificial intelligence is everywhere today."],
+                    Eng_A2: ["The history begins in 1956 at the Dartmouth conference. Researchers believe a computer can mimic human intelligence. They write the first logic programs.", "However, limits arrive quickly. Computers lack memory to analyze complex data. A lack of funding blocks research: it is the AI winter.", "The big change arrives in 2012 with AlexNet. This model uses deep learning to identify objects. The computational power of graphics chips makes this possible.", "Today, engineers train a gigantic language network. These systems generate code and transform our way of using technology daily."],
+                    Eng_B1: ["The concept of artificial intelligence is officialized in 1956. Visionaries estimate that a machine can simulate cognitive faculties. Early successes create immense optimism.", "However, theories collide with technical reality. Without a massive volume of data and sufficient computing power, research stagnates, leading to severe budget cuts.", "The modern revolution erupts in 2012. The emergence of graphics cards allows the industrial application of deep learning. A neural network model surpasses humans in vision tasks.", "Henceforth, a network of generative transformers can produce complex computer code, opening a new era for this powerful technology."],
+                    Eng_C1: ["Founded during the Dartmouth seminar in 1956, the discipline aims to formalize human reasoning via a computer. Initial symbolic approaches show real conceptual promises.", "The field then suffers structural setbacks. The inability to process complex masses of data causes a loss of investor confidence, inaugurating successive cycles of research winters.", "The paradigm shifts definitively in 2012. Access to massive digital databases validates the efficiency of connectionist learning. The convolutional model demonstrates unprecedented automated visual acuity.", "In the contemporary era, the deployment of massive language models, structured in a network of transformers, enables the generation of complex code, redefining the concept of intelligence."],
+                    Eng_Fluide: ["The birth of artificial intelligence dates back to the Dartmouth conference in 1956. Pioneers postulated that every aspect of intelligence could be described so precisely that a computer could simulate it.", "This ambition quickly collided with hardware barriers. The absence of architectures capable of processing massive data streams led to technical stagnation, causing institutional disengagement and freezing research.", "The major inflection occurs in 2012. The convergence of data profusion and parallelized computing enables the advent of deep learning, materialized by revolutionary performances in visual recognition.", "Today, the ubiquity of this technology rests on a large-scale generative neural network, capable of optimizing code and automating entire segments of the cognitive economy."]
+                },
+                3: { // Climate Technologies - 4 Pages
+                    title: "Technologies du Climat",
+                    pagesCount: 4,
+                    A1: [
+                        `Le <b>climat</b> change rapidement. Pour aider notre <b>planète</b>, les ingénieurs créent une nouvelle <b>technologie</b>. La première innovation est la capture directe du <b>carbone</b> dans l'air.`,
+                        `De grandes usines filtrent l'<b>atmosphère</b> pour extraire le CO2. Ensuite, ce gaz va dans le sol pour un <b>stockage</b> permanent. C'est une arme forte contre la <b>pollution</b>.`,
+                        `La deuxième solution utilise le soleil et le vent. Mais pour garder cette <b>énergie</b>, il faut une grande <b>batterie</b>. Les nouvelles batteries stockent l'électricité proprement.`,
+                        `La troisième innovation utilise la <b>chaleur</b> de la terre. C'est l'énergie géothermique profonde. Elle donne une électricité stable sans rejeter de gaz dangereux.`
+                    ],
+                    A2: [
+                        `Le changement du <b>climat</b> demande des actions urgentes. Pour protéger la <b>planète</b>, la <b>technologie</b> évolue. La méthode la plus moderne s'appelle la capture directe de l'air.`,
+                        `Cette technique aspire l'air pour isoler le <b>carbone</b>. Ce CO2 subit un <b>stockage</b> sécurisé dans des formations rocheuses souterraines, évitant le réchauffement de l'<b>atmosphère</b>.`,
+                        `Ensuite, la transition demande un meilleur réseau d'<b>énergie</b> renouvelable. Les ingénieurs déploient une <b>batterie</b> industrielle au sodium pour conserver l'électricité du soleil et du vent.`,
+                        `Enfin, on extrait la <b>chaleur</b> naturelle à grande profondeur. Cette géothermie avancée fournit une électricité constante, cruciale pour l'industrie propre.`
+                    ],
+                    B1: [
+                        `La crise du <b>climat</b> impose le développement de solutions industrielles majeures. Pour sauvegarder l'équilibre de la <b>planète</b>, trois innovations technologiques affichent des résultats concrets. La première est la capture directe du <b>carbone</b>.`,
+                        `Ces installations extraisent le gaz carbonique directement de l'<b>atmosphère</b>. Après séparation, le CO2 est injecté sous terre pour un <b>stockage</b> minéralisé définitif, neutralisant son impact thermique.`,
+                        `La seconde innovation concerne le stockage de l'<b>énergie</b>. Pour pallier l'intermittence du solaire et de l'éolien, une nouvelle génération de <b>batterie</b> à grande échelle stabilise les réseaux électriques.`,
+                        `La troisième voie exploite la <b>chaleur</b> terrestre profonde. Grâce à des forages avancés, la géothermie convertit cette ressource stable en électricité continue.`
+                    ],
+                    C1: [
+                        `L'atténuation des dérèglements du <b>climat</b> repose désormais sur le déploiement d'une <b>technologie</b> de pointe. Face à l'urgence environnementale planétaire, la capture directe du dioxyde de carbone constitue un levier d'action direct.`,
+                        `Ces complexes industriels purifient l'<b>atmosphère</b> en isolant les molécules de <b>carbone</b>. Le processus s'achève par un <b>stockage</b> géologique irréversible, transformant le gaz en roche solide sous la surface.`,
+                        `Parallèlement, la décarbonation du réseau d'<b>énergie</b> exige des systèmes de stockage massifs. Le passage à une <b>batterie</b> à flux ou à base de sodium résout le défi de l'intermittence des énergies renouvelables.`,
+                        `Enfin, la géothermie stimulée exploite la <b>chaleur</b> des roches profondes en circuit fermé, garantissant une production d'électricité décarbonée et constante.`
+                    ],
+                    Fluide: [
+                        `La stabilisation du système de notre <b>climat</b> exige une transition vers des technologies industrielles de rupture. Parmi les leviers d'ingénierie validés, la capture directe du <b>carbone</b> dans l'air s'impose comme un mécanisme indispensable de neutralité.`,
+                        `Ces usines extraisent le CO2 anthropique de l'<b>atmosphère</b> globale. Le fluide purifié subit une séquestration et un <b>stockage</b> géologique permanent, neutralisant définitivement son pouvoir de réchauffement.`,
+                        `Le second pilier concerne la refonte des infrastructures d'<b>énergie</b>. L'intégration massive du renouvelable s'appuie sur le déploiement de technologies de <b>batterie</b> stationnaire à haute densité, assurant la résilience des réseaux.`,
+                        `Le troisième axe stratégique exploite le potentiel thermique terrestre. Les systèmes géothermiques stimulés captent la <b>chaleur</b> profonde pour générer une électricité de base décarbonée.`
+                    ],
+                    Eng_A1: ["The climate is changing rapidly. To help our planet, engineers are creating a new technology. The first innovation is the direct capture of carbon from the air.", "Large factories filter the atmosphere to extract CO2. Then, this gas goes into the ground for permanent storage. It is a strong weapon against pollution.", "The second solution uses the sun and the wind. But to keep this energy, a large battery is needed. New batteries store electricity cleanly.", "The third innovation uses the earth's heat. It is deep geothermal energy. It provides stable electricity without releasing dangerous gases."],
+                    Eng_A2: ["Climate change requires urgent actions. To protect the planet, technology is evolving. The most modern method is called direct air capture.", "This technique vacuums air to isolate carbon. This CO2 undergoes secured storage in deep underground rock formations, preventing the heating of the atmosphere.", "Next, the transition requires a better renewable energy grid. Engineers deploy industrial sodium batteries to preserve electricity from the sun and wind.", "Finally, natural heat is extracted at great depth. This advanced geothermal energy provides constant electricity, crucial for clean industry."],
+                    Eng_B1: ["The climate crisis enforces the development of major industrial solutions. To safeguard the planet's balance, three technological innovations show concrete results. The first is direct carbon capture.", "These facilities extract carbon dioxide directly from the atmosphere. After separation, the CO2 is injected underground for a final mineralized storage, neutralizing its thermal impact.", "The second innovation concerns energy storage. To mitigate the intermittency of solar and wind power, a new generation of large-scale batteries stabilizes electrical grids.", "The third pathway exploits deep terrestrial heat. Thanks to advanced drilling, geothermal energy converts this stable resource into continuous electricity."],
+                    Eng_C1: ["Mitigating climate disruptions now relies on deploying advanced technology. Facing planetary environmental urgency, the direct capture of carbon dioxide constitutes a direct lever of action.", "These industrial complexes purify the atmosphere by isolating carbon molecules. The process ends with irreversible geological storage, transforming the gas into solid rock beneath the surface.", "Concurrently, decarbonizing the energy grid demands massive storage systems. Shifting to flow or sodium-based batteries solves the challenge of renewable energy intermittency.", "Finally, enhanced geothermal energy exploits heat from deep rocks in a closed loop, guaranteeing a carbon-free and constant production of electricity."],
+                    Eng_Fluide: ["Stabilizing our climate system requires a transition toward disruptive industrial technologies. Among the validated engineering levers, direct air carbon capture stands out as an indispensable mechanism for neutrality.", "These plants extract anthropogenic CO2 from the global atmosphere. The purified fluid undergoes sequestration and permanent geological storage, definitively neutralizing its warming potential.", "The second pillar concerns the overhaul of energy infrastructure. The massive integration of renewables relies on deploying high-density stationary battery technologies, ensuring grid resilience.", "The third strategic axis exploits the terrestrial thermal potential. Enhanced geothermal systems capture deep heat to generate carbon-free baseload electricity."]
+                },
+                4: { // Film Reviews - 2 Pages
+                    title: "Critiques de Films du Mois",
+                    pagesCount: 2,
+                    A1: [
+                        `Voici les <b>critiques</b> du mois à Paris. Le premier <b>film</b> raconte une belle <b>histoire</b> d'amour sur les ponts de la Seine. La <b>réalisation</b> est simple mais artistique. Le deuxième film montre un <b>acteur</b> célèbre dans un drame historique captivant.`,
+                        `Pour le <b>cinéma</b> international, trois œuvres gagnent de grands prix. Le <b>scénario</b> d'un thriller japonais est incroyable. Cette grande <b>œuvre</b> montre une excellente <b>production</b>. C'est un succès mondial à voir ce mois-ci.`
+                    ],
+                    A2: [
+                        `Ce mois-ci, les <b>critiques</b> célèbrent cinq films parisiens indépendants. Le meilleur <b>film</b> propose une touchante <b>histoire</b> sociale. Grâce à une excellente <b>réalisation</b>, les décors de la ville sont magnifiques. Un jeune <b>acteur</b> y joue son premier grand rôle.`,
+                        `Côté <b>cinéma</b> international, cinq chefs-d'œuvre arrivent en salle. Le <b>scénario</b> d'un long-métrage coréen surprend tout le monde. Cette <b>œuvre</b> bénéficie d'une <b>production</b> moderne, confirmant son succès dans chaque grand <b>festival</b>.`
+                    ],
+                    B1: [
+                        `La sélection mensuelle offre des <b>critiques</b> enthousiastes pour l'industrie locale. Un <b>film</b> marquant captive le public par son <b>histoire</b> réaliste. La <b>réalisation</b> soignée utilise la lumière naturelle de Paris. La performance de l'<b>acteur</b> principal est saluée par la presse.`,
+                        `Concernant le <b>cinéma</b> international, les cinq propositions du mois brillent par leur originalité. Le <b>scénario</b> d'un film de science-fiction canadien est d'une grande intelligence. Cette <b>œuvre</b> magistrale témoigne d'une <b>production</b> ambitieuse honorée en <b>festival</b>.`
+                    ],
+                    C1: [
+                        `La chronique cinématographique livre ses <b>critiques</b> sur cinq productions parisiennes. Le <b>film</b> phare se distingue par une <b>histoire</b> à l'architecture narrative complexe. La <b>réalisation</b> virtuose magnifie l'atmosphère urbaine, portée par un <b>acteur</b> en pleine possession de ses moyens.`,
+                        `Le panorama du <b>cinéma</b> international présente cinq œuvres majeures. Le <b>scénario</b> d'un drame psychologique européen pousse la réflexion très loin. Cette <b>œuvre</b> bénéficie d'une structure de <b>production</b> impeccable, déjà récompensée lors du dernier <b>festival</b>.`
+                    ],
+                    Fluide: [
+                        `Le bilan cinématographique de ce mois met en lumière des <b>critiques</b> élogieuses pour les productions locales. Un <b>film</b> d'auteur se démarque par la profondeur de son <b>histoire</b>, servie par une <b>réalisation</b> audacieuse qui capte l'essence de Paris. Le jeu nuancé de l'<b>acteur</b> principal insuffle une grande vérité au récit.`,
+                        `Quant au <b>cinéma</b> international, les cinq longs-métrages sélectionnés illustrent la vitalité de l'industrie. Le <b>scénario</b> ciselé d'un film policier scandinave maintient une tension constante, faisant de cette <b>œuvre</b> un modèle de <b>production</b> plébiscité lors de chaque grand <b>festival</b>.`
+                    ],
+                    Eng_A1: ["Here are the reviews of the month in Paris. The first movie tells a beautiful love story on the bridges of the Seine. The direction is simple but artistic. The second movie features a famous actor in a captivating historical drama.", "For international cinema, three works win major awards. The screenplay of a Japanese thriller is incredible. This great work shows excellent production. It is a global success to see this month."],
+                    Eng_A2: ["This month, reviews celebrate five independent Parisian movies. The best movie offers a touching social story. Thanks to excellent direction, the city's backgrounds are magnificent. A young actor plays his first major role there.", "On the international cinema side, five masterpieces arrive in theaters. The screenplay of a Korean feature film surprises everyone. This work benefits from a modern production, confirming its success in every major festival."],
+                    Eng_B1: ["The monthly selection offers enthusiastic reviews for the local industry. A striking movie captivates the audience with its realistic story. The polished direction uses Paris's natural light. The lead actor's performance is praised by the press.", "Regarding international cinema, the month's five proposals shine with originality. The screenplay of a Canadian science-fiction film is highly intelligent. This masterful work reflects an ambitious production honored at festivals."],
+                    Eng_C1: ["The cinematic column delivers its reviews on five Parisian productions. The flagship movie stands out with a story of complex narrative architecture. The virtuous direction magnifies the urban atmosphere, supported by an actor in full command of his craft.", "The international cinema panorama presents five major works. The screenplay of an international psychological drama pushes reflection very far. This work benefits from an impeccable production structure, already rewarded during the last festival."],
+                    Eng_Fluide: ["This month's cinematic assessment highlights glowing reviews for local productions. An auteur film stands out through the depth of its story, served by an audacious direction that captures the essence of Paris. The lead actor's nuanced acting breathes great truth into the narrative.", "As for international cinema, the five selected feature films illustrate the industry's vitality. The finely crafted screenplay of a Scandinavian crime movie maintains constant tension, making this work a model of production acclaimed at every major festival."]
                 }
             },
             news: {
-                1: {
-                    title: "Europe : Dernières 24 Heures",
-                    A1: `Un nouvel <b>accord</b> pour le <b>climat</b> est <b>signé</b> à <b>Paris</b>. Beaucoup de <b>pays</b> <b>travaillent</b> <b>ensemble</b> pour <b>réduire</b> la <b>pollution</b>.<br><br>En plus, un <b>nouveau</b> <b>train</b> <b>rapide</b> <b>connecte</b> maintenant <b>Bruxelles</b> et <b>Berlin</b>. Le <b>voyage</b> <b>prend</b> seulement cinq <b>heures</b>. Enfin, un grand <b>sommet</b> <b>européen</b> <b>débute</b> ce soir. Les <b>dirigeants</b> discutent de la <b>sécurité</b> et de l'<b>énergie</b>.`,
-                    A2: `Un traité environnemental majeur vient d'être ratifié à Paris, engageant les nations européennes dans un effort collectif pour restreindre la pollution industrielle.<br><br>Parallèlement, la nouvelle liaison ferroviaire à grande vitesse reliant Bruxelles à Berlin a été inaugurée ce matin, raccourcissant considérablement les temps de transport transfrontaliers. Ce soir, l'ouverture officielle du sommet de l'Union européenne mobilise les chefs d'État autour des problématiques énergétiques urgentes.`,
-                    B1: `La scène diplomatique européenne est marquée aujourd'hui par la ratification historique des nouveaux amendements de l'Accord de Paris, visant à imposer des réductions drastiques d'émissions de carbone aux industries lourdes.<br><br>Sur le plan des infrastructures, la mise en service d'un axe ferroviaire direct entre Bruxelles et Berlin promet de révolutionner les déplacements écologiques sur le vieux continent. Par ailleurs, les chefs d'État se rassemblent actuellement pour un sommet extraordinaire axé sur la sécurisation des approvisionnements d'énergie.`,
-                    C1: `L'actualité continentale est dominée par l'aboutissement des négociations environnementales à Paris, où une coalition d'États a paraphé un protocole contraignant pour accélérer le démantèlement des centrales à charbon.<br><br>Cette avancée écologique coïncide avec l'inauguration en grande pompe du corridor ferroviaire transcontinental connectant Bruxelles à Berlin, un projet d'ingénierie publique conçu pour pallier l'hégémonie des liaisons aériennes court-courriers. Simultanément, le sommet des chefs d'État s'ouvre dans un climat de tension géopolitique, focalisé sur la résilience énergétique.`,
-                    Fluide: `Les chancelleries européennes entérinent aujourd'hui à Paris un tournant écologique d'envergure, matérialisé par la signature d'un avenant structurel aux traités climatiques antérieurs, destiné à accélérer la décarbonation industrielle.<br><br>Cette dynamique se double d'une percée majeure dans l'intégration territoriale avec le voyage inaugural du tronçon ferroviaire à haute performance reliant Bruxelles à Berlin, réduisant le trajet à une simple formalité de cinq heures. C'est dans cette conjoncture interconnectée que s'ouvre le Conseil européen extraordinaire, où s'articulent de délicates tractations sur l'autonomie stratégique.`,
-                    Eng_A1: "A new climate agreement is signed in Paris. Many countries are working together to reduce pollution. In addition, a new fast train connects Brussels and Berlin now. The trip takes only five hours. Finally, a great European summit begins tonight...",
-                    Eng_A2: "A major environmental treaty has just been ratified in Paris, committing European nations to a collective effort to restrict industrial pollution. Meanwhile, the new high-speed rail link connecting Brussels to Berlin was inaugurated...",
-                    Eng_B1: "The European diplomatic scene is marked today by the historic ratification of the new amendments to the Paris Agreement, aiming to impose drastic carbon emission reductions. In infrastructure, the deployment of a direct rail link...",
-                    Eng_C1: "Continental news is dominated by the culmination of environmental negotiations in Paris, where a coalition of states signed a binding protocol. This coincides with the inauguration of the transcontinental railway corridor...",
-                    Eng_Fluide: "European chancelleries are today confirming a major ecological shift in Paris, materialized by the signature of a structural amendment to previous climate treaties. This dynamic is coupled with a major breakthrough in regional integration..."
+                1: { // Europe News
+                    title: "Europe : Top 24 Heures",
+                    pagesCount: 1,
+                    A1: `Un nouvel <b>accord</b> agricole protège l'environnement en Europe. Les pays veulent réduire la <b>pollution</b> de l'air. Les ministres terminent un grand <b>sommet</b> à Bruxelles. Ils prennent une <b>mesure</b> ferme pour la sécurité.`,
+                    A2: `Un <b>accord</b> environnemental majeur est signé ce matin en Europe pour encadrer les émissions industrielles et stopper la <b>pollution</b>. Lors du <b>sommet</b> à Bruxelles, chaque gouvernement a voté une <b>mesure</b> pour stabiliser le marché commun.`,
+                    B1: `La politique continentale est marquée par un <b>accord</b> historique visant à réduire la <b>pollution</b> agricole. Réunis en <b>sommet</b> extraordinaire, les dirigeants européens ont adopté une <b>mesure</b> stricte pour garantir la transition écologique globale.`,
+                    C1: `L'actualité européenne est dominée par la ratification d'un <b>accord</b> contraignant axé sur la neutralité carbone. Ce <b>sommet</b> des chefs d'État débouche sur une <b>mesure</b> réglementaire conçue pour accélérer la modernisation des structures.`,
+                    Fluide: `Les chancelleries européennes valident aujourd'hui un <b>accord</b> structurel d'envergure contre la <b>pollution</b>. Au terme d'un <b>sommet</b> intense, une <b>mesure</b> commune a été adoptée, illustrant la volonté de l'Union de stabiliser sa trajectoire écologique.`,
+                    Eng_A1: ["A new agricultural agreement protects the environment in Europe. Countries want to reduce air pollution. Ministers finish a major summit in Brussels. They take a firm measure for security."],
+                    Eng_A2: ["A major environmental agreement was signed this morning in Europe to regulate industrial emissions and stop pollution. During the summit in Brussels, each government voted on a measure to stabilize the common market."],
+                    Eng_B1: ["Continental politics is marked by a historic agreement aiming to reduce agricultural pollution. Met in an extraordinary summit, European leaders adopted a strict measure to guarantee the global ecological transition."],
+                    Eng_C1: ["European news is dominated by the ratification of a binding agreement focused on carbon neutrality. This summit of heads of state results in a regulatory measure designed to accelerate the modernization of structures."],
+                    Eng_Fluide: ["European chancelleries are validating today a major structural agreement against pollution. At the end of an intense summit, a common measure was adopted, illustrating the Union's drive to stabilize its ecological trajectory."]
                 },
-                2: {
-                    title: "Infos du Monde : Dernières 24 Heures",
-                    A1: `Un <b>vaisseau</b> <b>spatial</b> <b>arrive</b> sur <b>Mars</b> aujourd'hui. Il <b>envoie</b> des <b>photos</b> de la <b>planète</b> rouge.<br><br>En Asie, la <b>Banque</b> <b>mondiale</b> <b>donne</b> de l'<b>argent</b> pour construire des <b>écoles</b> et <b>aider</b> les <b>enfants</b> pauvres. Aux États-Unis, les grandes entreprises de technologie annoncent de nouveaux outils d'intelligence artificielle pour les téléphones portables.`,
-                    A2: `Une sonde spatiale internationale a atterri avec succès sur Mars ce matin, transmettant immédiatement des données scientifiques et des images panoramiques de la surface rocheuse.<br><br>Dans le secteur économique, la Banque mondiale a validé un financement majeur destiné à moderniser le système éducatif dans plusieurs provinces rurales d'Asie du Sud-Est. À San Francisco, les géants de la tech dévoilent de nouvelles applications mobiles automatisées.`,
-                    B1: `L'exploration spatiale franchit un nouveau cap avec l'atterrissage d'une sonde automatique sur le sol de Mars, chargée d'analyser la composition minérale et de rechercher des traces d'eau fossile.<br><br>Sur le plan humanitaire et financier, une subvention substantielle accordée par la Banque mondiale permettra le déploiement d'infrastructures scolaires modernes en Asie. Pendant ce temps, la Silicon Valley s'agite autour du lancement d'architectures d'IA embarquées de nouvelle génération.`,
-                    C1: `Les yeux du monde scientifique sont rivés sur Mars, où un atterrisseur robotisé a entamé sa mission d'exploration exbiologique, envoyant des clichés haute résolution de formations géologiques complexes.<br><br>Cette prouesse technologique s'accompagne d'un rééquilibrage socio-économique en Asie, grâce à l'allocation par la Banque mondiale de fonds d'urgence visant à résorber les inégalités scolaires. Parallèlement, l'industrie logicielle américaine franchit un jalon en intégrant des réseaux de neurones génératifs au cœur des puces de smartphones.`,
-                    Fluide: `L'odyssée spatiale contemporaine s'enrichit d'un jalon capital avec la sédentarisation d'un laboratoire mobile automatisé sur les plaines de Mars, ouvrant un chapitre d'analyses spectroscopiques à la recherche de composés organiques.<br><br>Sur l'échiquier macroéconomique, les instances de la Banque mondiale ont débloqué une enveloppe budgétaire d'envergure pour restructurer les systèmes éducatifs obsolètes des économies émergentes. Simultanément, le marché technologique mondial subit une secousse systémique suite à la démonstration d'IA génératives exécutées localement en silicium.`,
-                    Eng_A1: "A spaceship arrives on Mars today. It sends photos of the red planet. In Asia, the World Bank gives money to build schools and help poor children. In the United States, big technology companies announce new tools...",
-                    Eng_A2: "An international space probe landed successfully on Mars this morning, immediately transmitting scientific data and panoramic images. In the economic sector, the World Bank validated major funding...",
-                    Eng_B1: "Space exploration crosses a new milestone with the landing of an automated probe on Martian soil, tasked with analyzing mineral composition. On the humanitarian side, a substantial subsidy from the World Bank...",
-                    Eng_C1: "The eyes of the scientific world are fixed on Mars, where a robotic lander has begun its exobiological exploration mission, sending high-resolution prints. This is accompanied by socio-economic rebalancing in Asia...",
-                    Eng_Fluide: "The contemporary space odyssey is enriched by a crucial milestone with the deployment of an automated mobile laboratory on Mars. On the macroeconomic chessboard, the World Bank has unlocked an extensive budget..."
+                2: { // World News
+                    title: "Infos du Monde : Top 24 Heures",
+                    pagesCount: 1,
+                    A1: `La Banque mondiale débloque un grand <b>fonds</b> pour l'éducation. Cet argent aide le <b>développement</b> des écoles. Les nations discutent de la <b>sécurité</b> internationale pour éviter une nouvelle <b>crise</b> financière.`,
+                    A2: `La Banque mondiale annonce l'allocation d'un <b>fonds</b> d'urgence pour soutenir le <b>développement</b> économique. Ce programme renforce la <b>sécurité</b> face à la <b>crise</b> qui touche actuellement les marchés.`,
+                    B1: `Sur l'échiquier macroéconomique, la création d'un <b>fonds</b> de stabilisation monétaire soutient le <b>développement</b> des infrastructures. Les institutions collaborent pour assurer la <b>sécurité</b> financière et prévenir une <b>crise</b> systémique.`,
+                    C1: `Les instances multilatérales approuvent le déblocage d'un <b>fonds</b> d'envergure dédié au <b>développement</b> industriel. Cette intervention vise à consolider la <b>sécurité</b> des échanges face à une <b>crise</b> de confiance globale.`,
+                    Fluide: `L'actualité macroéconomique mondiale est marquée par l'activation d'un <b>fonds</b> stratégique destiné à stimuler le <b>développement</b> des nations émergentes. Cette initiative renforce la <b>sécurité</b> des marchés face aux risques de <b>crise</b>.`,
+                    Eng_A1: ["The World Bank unlocks a large fund for education. This money helps the development of schools. Nations discuss international security to avoid a new financial crisis."],
+                    Eng_A2: ["The World Bank announces the allocation of an emergency fund to support economic development. This program reinforces security facing the crisis currently affecting markets."],
+                    Eng_B1: ["On the macroeconomic chessboard, the creation of a monetary stabilization fund supports infrastructure development. Institutions collaborate to ensure financial security and prevent a systemic crisis."],
+                    Eng_C1: ["Multilateral authorities approve the release of a major fund dedicated to industrial development. This intervention aims to consolidate trade security in the face of a global crisis of confidence."],
+                    Eng_Fluide: ["Global macroeconomic news is marked by the activation of a strategic fund intended to stimulate the development of emerging nations. This initiative reinforces market security against crisis risks."]
+                },
+                3: { // Local Paris News
+                    title: "Local : Paris Métropole",
+                    pagesCount: 1,
+                    A1: `La <b>ville</b> de Paris agrandit son réseau de <b>climatisation</b> sous le <b>fleuve</b> Seine. Cette <b>infrastructure</b> rafraîchit les bâtiments publics. C'est une bonne étape pour la <b>transition</b> verte.`,
+                    A2: `La municipalité de Paris modernise son <b>infrastructure</b> de fraîcheur urbaine. Ce réseau de <b>climatisation</b> utilise l'eau froide provenant du <b>fleuve</b> Seine pour rafraîchir la <b>ville</b> pendant l'été.`,
+                    B1: `Paris accélère sa transition écologique en déployant une importante <b>infrastructure</b> souterraine. Ce grand réseau de <b>climatisation</b> urbaine exploite le <b>fleuve</b> pour abaisser la température au cœur de la <b>ville</b>.`,
+                    C1: `La mairie de Paris valide l'extension d'une <b>infrastructure</b> thermique majeure. Ce réseau de <b>climatisation</b> puisé dans le <b>fleuve</b> Seine illustre la stratégie de la <b>ville</b> pour piloter sa mutation environnementale.`,
+                    Fluide: `La métropole parisienne intensifie ses chantiers de modernisation. L'extension programmée de l'<b>infrastructure</b> de <b>climatisation</b> connectée au <b>fleuve</b> démontre l'engagement de la <b>ville</b> dans une démarche de résilience urbaine.`,
+                    Eng_A1: ["The city of Paris expands its cooling network under the river Seine. This infrastructure cools public buildings. It is a good step for the green transition."],
+                    Eng_A2: ["The municipality of Paris modernizes its urban cooling infrastructure. This air conditioning network uses cold water from the river Seine to cool the city during summer."],
+                    Eng_B1: ["Paris accelerates its ecological transition by deploying an important underground infrastructure. This large urban cooling network exploits the river to lower the temperature in the heart of the city."],
+                    Eng_C1: ["The Paris City Hall validates the extension of a major thermal infrastructure. This cooling network drawn from the river Seine illustrates the city's strategy to steer its environmental mutation."],
+                    Eng_Fluide: ["The Parisian metropolis intensifies its modernization projects. The programmed extension of the cooling infrastructure connected to the river demonstrates the city's commitment to a process of urban resilience."]
                 }
             }
         };
 
-        // Navigation Tab Switching Engine
+        // Navigation Controllers
         function switchTab(tabId, element) {
             activeTabId = tabId;
             document.querySelectorAll('.menu-view').forEach(view => view.classList.remove('active'));
@@ -510,19 +718,18 @@
             }
         }
 
-        // Reader Interface Triggers
         function launchReader(type, id) {
             activeReaderType = type;
             activeItemId = id;
+            currentPage = 0; // Reset page tracking index upon entering an article
             
             document.getElementById(activeTabId).classList.remove('active');
             document.getElementById('view-reader').classList.add('active');
             
-            // Sync current configuration state
             document.getElementById('level-slider').value = currentLevel;
             document.getElementById('reader-translation-panel').style.display = 'none';
             
-            executeContentParse(type, id, currentLevel);
+            executeContentParse();
         }
 
         function exitReader() {
@@ -530,25 +737,48 @@
             document.getElementById(activeTabId).classList.add('active');
         }
 
-        // Core UI Linguistic Parser
-        function executeContentParse(type, id, levelIndex) {
-            const levelKey = levelsMap[levelIndex];
+        // Pagination Core Engine Trigger
+        function navigatePage(direction) {
+            currentPage += direction;
+            executeContentParse();
+        }
+
+        // Core Parser
+        function executeContentParse() {
+            const levelKey = levelsMap[currentLevel];
             document.getElementById('level-tag').innerText = levelKey;
             
-            const targetData = db[type][id];
+            const targetData = db[activeReaderType][activeItemId];
             document.getElementById('reader-title-display').innerText = targetData.title;
             
-            let rawText = targetData[levelKey];
+            const totalPages = targetData.pagesCount;
             
-            // Text processor replacing custom <b> definitions with functional span triggers
+            // Show page numbers if the article contains multi-page arrays
+            if (totalPages > 1) {
+                document.getElementById('reader-page-display').style.display = 'block';
+                document.getElementById('reader-page-display').innerText = `Page ${currentPage + 1} sur ${totalPages}`;
+                document.getElementById('reader-pagination-controls').style.display = 'flex';
+                
+                // Toggle boundary button properties
+                document.getElementById('pagination-prev-btn').disabled = (currentPage === 0);
+                document.getElementById('pagination-next-btn').disabled = (currentPage === totalPages - 1);
+            } else {
+                document.getElementById('reader-page-display').style.display = 'none';
+                document.getElementById('reader-pagination-controls').style.display = 'none';
+            }
+            
+            // Handle array versus string extraction depending on single/multi page assets
+            let rawText = (totalPages > 1) ? targetData[levelKey][currentPage] : targetData[levelKey];
+            let rawEnglish = (totalPages > 1) ? targetData["Eng_" + levelKey][currentPage] : targetData["Eng_" + levelKey];
+            
             let processedText = rawText.replace(/<b>(.*?)<\/b>/g, function(match, word) {
                 let lookupKey = word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()""'«»]/g,"").trim();
-                let translationValue = dictionary[lookupKey] || "Word definition translation logged";
+                let translationValue = dictionary[lookupKey] || "Logged translation parameter";
                 return `<span class="w" data-fr="${lookupKey}" data-en="${translationValue}">${word}</span>`;
             });
             
             document.getElementById('reader-body-display').innerHTML = processedText;
-            document.getElementById('reader-translation-panel').innerText = targetData["Eng_" + levelKey];
+            document.getElementById('reader-translation-panel').innerText = rawEnglish;
             
             bindWordInteractions();
         }
@@ -559,10 +789,8 @@
                     const frWord = this.getAttribute('data-fr');
                     const enWord = this.getAttribute('data-en');
                     
-                    // Display overlay response toast
                     triggerToast(`💡 <b>${this.innerText}</b> = ${enWord}`);
                     
-                    // Add entry to user's personalized flashcard arrays if it doesn't exist
                     const existingEntry = savedVocabularyDeck.find(item => item.fr === frWord);
                     if (!existingEntry) {
                         savedVocabularyDeck.push({ fr: frWord, en: enWord });
@@ -577,16 +805,14 @@
             panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
         }
 
-        // Flashcard State Management and Rendering Engine
-        let trackingCardIndex = 0;
-        
+        // Flashcards Known-State Removal Engine
         function renderFlashcardsDeck() {
             const wrapper = document.getElementById('deck-wrapper');
             if (savedVocabularyDeck.length === 0) {
                 wrapper.innerHTML = `
                     <div class="empty-deck">
-                        <div style="font-size:40px; margin-bottom:15px;">🎴</div>
-                        <p>Votre paquet est vide.<br><b>Comment créer des cartes ?</b> Pendant que vous lisez une histoire ou une actualité, cliquez sur les mots soulignés pour les ajouter automatiquement ici !</p>
+                        <div style="font-size:36px; margin-bottom:12px;">🎉</div>
+                        <p>Votre paquet de cartes est vide !<br><br>Pendant que vous lisez un article, cliquez sur les mots soulignés pour les épingler automatiquement ici.</p>
                     </div>`;
                 return;
             }
@@ -608,13 +834,13 @@
                         <button class="card-btn btn-prev" onclick="shiftActiveCard(-1)">Précédent</button>
                         <button class="card-btn btn-next" onclick="shiftActiveCard(1)">Suivant</button>
                     </div>
+                    <button class="card-btn btn-known" onclick="markCardAsKnown()">✓ Je connais ce mot (Supprimer)</button>
                 </div>`;
         }
 
         function flipActiveCard() {
             const backText = document.getElementById('card-back-text');
             const hintText = document.getElementById('card-hint-text');
-            
             if (backText.style.display === 'block') {
                 backText.style.display = 'none';
                 hintText.innerText = "Cliquez pour révéler";
@@ -631,7 +857,26 @@
             renderFlashcardsDeck();
         }
 
-        // Notification Helper Engine
+        // "Mark as Known" Script Logic
+        function markCardAsKnown() {
+            // Remove item from vocabulary deck
+            savedVocabularyDeck.splice(trackingCardIndex, 1);
+            
+            // Sync bottom bar navigation layout counter
+            document.getElementById('global-card-count').innerText = savedVocabularyDeck.length;
+            
+            triggerToast("✨ Mot maîtrisé ! Retiré de la liste.");
+            
+            // Recalibrate tracking indicators safely
+            if (savedVocabularyDeck.length === 0) {
+                trackingCardIndex = 0;
+            } else if (trackingCardIndex >= savedVocabularyDeck.length) {
+                trackingCardIndex = 0;
+            }
+            
+            renderFlashcardsDeck();
+        }
+
         function triggerToast(msg) {
             const toast = document.getElementById('toast');
             toast.innerHTML = msg;
@@ -639,11 +884,56 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3000);
         }
 
-        // Monitor difficulty slider mutations
         document.getElementById('level-slider').addEventListener('input', function() {
             currentLevel = parseInt(this.value);
-            executeContentParse(activeReaderType, activeItemId, currentLevel);
+            executeContentParse();
         });
     </script>
 </body>
+# SYSTEM HANDOVER: CONTENT GENERATION ENGINE FOR LANGSIFT
+
+## 1. BACKGROUND & OVERVIEW
+LangSift is a lightweight, mobile-responsive web application designed to help English speakers learn French through level-adaptive reading. The app relies on a single HTML file containing an embedded JavaScript database (`db`) and a flat vocabulary mapping dictionary (`dictionary`).
+
+## 2. DATABASE ARCHITECTURE REQUIRMENTS
+When generating content (either a 'story' or a 'news' article), you must provide the output structured exactly as a JavaScript object entry. Each item must contain text variants mapped precisely across 5 CEFR-aligned difficulty levels:
+
+- **A1:** Extremely simple sentences, heavy repetition, core vocabulary. Only a selected few target vocabulary words should be wrapped in `<b>` tags.
+- **A2:** Slightly longer sentences, introduction of common past tenses (passé composé).
+- **B1:** Paragraph structure, narrative flow, more diverse vocabulary, standard descriptive tenses (imparfait).
+- **C1:** Advanced syntax, complex conjunctions, nuanced vocabulary, idiomatic expressions.
+- **Fluide:** Native-level French, rich literary or advanced journalistic phrasing, complex tenses (subjonctif, passé simple where appropriate).
+- **Eng_A1 to Eng_Fluide:** Natural English translations of each respective level.
+
+## 3. TEXT TAGGING & DICTIONARY FORMATTING RULES
+To make words interactive (clickable for flashcards), specific French vocabulary words must be tagged in the database strings, and their literal definitions added to the dictionary.
+
+- **In the Text:** Wrap the target French word EXACTLY like this: <b>mot</b>. 
+- **Linguistic Cleanliness:** Do NOT include punctuation inside the `<b>` tag. (e.g., Use `un <b>garçon</b>...` NOT `un <b>garçon.</b>`).
+- **In the Dictionary Object:** Every single word you choose to put in a `<b>` tag MUST have a corresponding key-value entry generated for the `dictionary` object. 
+- **Format:** All keys must be lowercase, stripped of punctuation, and mapped to a concise English translation string. 
+- **CRITICAL SYNTAX WARNING:** Keys and values must be separated by a COLON (`:`), never a comma (`,`). An incorrect comma inside the object declaration will crash the browser DOM parsing engine.
+
+## 4. EXPECTED OUTPUT TEMPLATE
+When asked to create a story or news piece, output it exactly in this code block template:
+
+### CODE TO PASTE INTO THE 'DB' OBJECT:
+[id_number]: {
+    title: "[Title in French]",
+    A1: `[French A1 text with selective <b>bold</b> words]`,
+    A2: `[French A2 text]`,
+    B1: `[French B1 text]`,
+    C1: `[French C1 text]`,
+    Fluide: `[French Fluide text]`,
+    Eng_A1: "[English Translation]",
+    Eng_A2: "[English Translation]",
+    Eng_B1: "[English Translation]",
+    Eng_C1: "[English Translation]",
+    Eng_Fluide: "[English Translation]"
+}
+
+### CODE TO ADD TO THE 'DICTIONARY' OBJECT:
+"word1": "translation1",
+"word2": "translation2",
+"word3": "translation3"
 </html>
