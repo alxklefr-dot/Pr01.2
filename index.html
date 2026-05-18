@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangSift - Multi-Menu Ecosystem</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --card-bg: #ffffff;
+            --text-color: #2c2520;
+            --text-muted: #6e655f;
+            --accent-color: #8c7853;
+            --accent-light: #eaddca;
+            --premium-color: #d4af37;
+            --nav-bg: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Changed for CodePen compatibility so desktop clicks register easily */
+            -webkit-user-select: auto;
+            user-select: auto;
+        }
+        
+        /* Main View Container */
+        .app-container {
+            max-width: 500px;
+            width: 100%;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding: 20px 20px 80px 20px; /* space for bottom nav bar */
+        }
+        
+        .menu-view {
+            display: none;
+        }
+        .menu-view.active {
+            display: block;
+        }
+
+        /* App Header Formatting */
+        .app-header {
+            margin-top: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .app-header h1 {
+            font-size: 28px;
+            margin: 0;
+            font-family: Georgia, serif;
+            letter-spacing: 1px;
+        }
+        .app-header p {
+            color: var(--text-muted);
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        /* Lists and Cards */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+            cursor: pointer;
+            position: relative;
+        }
+        .content-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+        .content-card p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background-color: var(--accent-light);
+            color: var(--accent-color);
+            margin-top: 10px;
+        }
+
+        /* Fixed Navigation Reader Bar */
+        .reader-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background-color: var(--bg-color);
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-row {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--accent-color);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .slider-container {
+            width: 90%;
+            max-width: 460px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-color);
+        }
+        .ticks {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 11px;
+            font-weight: bold;
+            color: #999;
+            margin-top: 4px;
+        }
+        .reader-content {
+            margin-top: 110px;
+        }
+        .story-title {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .text-block {
+            font-size: 18px;
+            line-height: 1.65;
+            margin-bottom: 25px;
+        }
+        span.w {
+            border-bottom: 1px dashed #bbb;
+            cursor: pointer;
+        }
+        span.w:active {
+            background-color: var(--accent-light);
+        }
+        .eng-toggle-btn {
+            display: block;
+            margin: 20px auto;
+            background: none;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .english-translation-panel {
+            background-color: #f3f0ea;
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+            border-radius: 0 8px 8px 0;
+            display: none;
+        }
+
+        /* Flashcard Component Styling */
+        .flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .card-counter {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .flashcard {
+            width: 100%;
+            max-width: 340px;
+            height: 220px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .flashcard:active {
+            transform: scale(0.98);
+        }
+        .flashcard .word-surface {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .flashcard .word-translation {
+            font-size: 18px;
+            color: var(--accent-color);
+            font-style: italic;
+            display: none;
+        }
+        .card-hint {
+            position: absolute;
+            bottom: 15px;
+            font-size: 11px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+            width: 100%;
+            max-width: 340px;
+        }
+        .card-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-prev { background-color: #e2ded6; color: #555; }
+        .btn-next { background-color: var(--accent-color); color: white; }
+        
+        .empty-deck {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Global Bottom Sticky Tab Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 65px;
+            background-color: var(--nav-bg);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 500;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            width: 33%;
+        }
+        .nav-item.active {
+            color: var(--accent-color);
+        }
+        .nav-item-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        /* Notification System Toast */
+        .toast {
+            position: fixed;
+            bottom: 85px;
+            background: #2c2520;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            max-width: 80%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div id="view-stories" class="menu-view active">
+            <div class="app-header">
+                <h1>LangSift</h1>
+                <p>Bibliothèque de fictions adaptatives</p>
+            </div>
+            <div class="item-list">
+                <div class="content-card" onclick="launchReader('story', 1)">
+                    <h3>1. Le Garçon de l'Escalier</h3>
+                    <p>An eleven-year-old orphan discovers his true magical lineage when letters storm his household.</p>
+                    <span class="badge">Fiction • Gratuit</span>
+                </div>
+                <div class="content-card" onclick="launchReader('story', 2)">
+                    <h3>2. L'Ascension de Temüjin</h3>
+                    <p>Explore the ruthless early life and strategic campaigns of the man who became Genghis Khan.</p>
+                    <span class="badge">Histoire • Éléments Libres</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-news" class="menu-view">
+            <div class="app-header">
+                <h1>Actualités</h1>
+                <p>Real-time updates translated to your level</p>
+            </div>
+            <div class="item-list">
+                <div class="content-card" onclick="launchReader('news', 1)">
+                    <h3>1. Europe : Dernières 24 Heures</h3>
+                    <p>Key diplomatic movements, policy updates, and weather anomalies occurring across the continent.</p>
+                    <span class="badge">Presse • Europe</span>
+                </div>
+                <div class="content-card" onclick="launchReader('news', 2)">
+                    <h3>2. Infos du Monde : Dernières 24 Heures</h3>
+                    <p>Global economic shifts, tech advancements, and major operational developments around the globe.</p>
+                    <span class="badge">Presse • International</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-flashcards" class="menu-view">
+            <div class="app-header">
+                <h1>Mes Cartes</h1>
+                <p>Review words you tapped while reading</p>
+            </div>
+            
+            <div id="deck-wrapper">
+                </div>
+        </div>
+
+        <div id="view-reader" class="menu-view">
+            <div class="reader-header">
+                <div class="nav-row">
+                    <button class="back-btn" onclick="exitReader()">✕ Quitter</button>
+                    <div class="slider-label">NIVEAU: <span id="level-tag">A1</span></div>
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="level-slider" min="1" max="5" value="1" step="1">
+                    <div class="ticks">
+                        <span>A1</span>
+                        <span>A2</span>
+                        <span>B1</span>
+                        <span>C1</span>
+                        <span>Fluide</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reader-content">
+                <div id="reader-title-display" class="story-title"></div>
+                <div id="reader-body-display" class="text-block"></div>
+                
+                <button class="eng-toggle-btn" onclick="toggleTranslationBox()">Afficher la traduction / Show English</button>
+                <div id="reader-translation-panel" class="english-translation-panel"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('view-stories', this)">
+            <div class="nav-item-icon">📚</div>
+            <div>Histoires</div>
+        </button>
+        <button class="nav-item" onclick="switchTab('view-news', this)">
+            <div class="nav-item-icon">📰</div>
+            <div>Actualités</div>
+        </button>
+        <button class="nav-item" onclick="switchTab('view-flashcards', this)">
+            <div class="nav-item-icon">🎴</div>
+            <div>Flashcards (<span id="global-card-count">0</span>)</div>
+        </button>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // State Engines
+        let activeTabId = 'view-stories';
+        let activeReaderType = 'story';
+        let activeItemId = 1;
+        let currentLevel = 1;
+        
+        // Personalized local user vocabulary ecosystem
+        let savedVocabularyDeck = [];
+
+        const levelsMap = { 1: "A1", 2: "A2", 3: "B1", 4: "C1", 5: "Fluide" };
+        
+        // Fixed syntax errors here (replaced ',' with ':')
+        const dictionary = {
+            "accord": "agreement", "climat": "climate", "signé": "signed", "paris": "Paris", "pays": "countries", "travaillent": "are working", "ensemble": "together", "réduire": "to reduce", "pollution": "pollution", "nouveau": "new", "train": "train", "rapide": "fast train", "connecte": "connects", "bruxelles": "Brussels", "berlin": "Berlin", "voyage": "trip / journey", "prend": "takes", "heures": "hours", "maintenant": "now", "sommet": "summit", "européen": "European summit", "débute": "begins", "dirigeants": "leaders", "discutent": "are discussing", "sécurité": "security", "énergie": "energy", "transition": "transition", "écologique": "ecological transition", "infrastructures": "infrastructures", "ferroviaires": "railway structures", "réseau": "network", "transcontinental": "transcontinental", "inauguration": "inauguration", "liaison": "connection", "directe": "direct link", "ratification": "ratification", "historique": "historic ratification", "visant": "aiming at", "émissions": "emissions", "carbone": "carbon emissions", "renforcer": "to reinforce", "coopération": "cooperation", "frontières": "borders", "modernisation": "modernization", "rail": "railway", "réduction": "reduction", "drastique": "drastique / major", "temps": "time / duration", "parcours": "route", "clivages": "divisions / rifts", "politiques": "political rifts", "cohésion": "cohesion", "continentale": "continental cohesion", "déploiement": "deployment", "ambitieux": "ambitious deployment", "lignes": "lines", "grande vitesse": "high speed lines", "conjoncture": "situation / state of affairs", "géopolitique": "geopolitics", "accélère": "accelerates", "autonomie": "autonomy / independence", "stratégique": "strategic autonomy", "vaisseau": "spaceship / vessel", "spatial": "spacecraft", "arrive": "arrives", "mars": "Mars", "envoie": "sends", "photos": "photos / pictures", "planète": "planet", "banque": "bank", "mondiale": "World Bank", "donne": "gives", "argent": "money", "écoles": "schools", "aider": "to help", "enfants": "children", "sonde": "probe / space probe", "atterrit": "lands", "succès": "success", "transmet": "transmits", "données": "data", "précieuses": "precious data", "financement": "funding", "majeur": "major funding", "destiné": "destined for", "éducation": "education", "développement": "development", "exploration": "exploration", "interplanétaire": "interplanetary exploration", "robotique": "robotics", "analyse": "analyzes", "sol": "soil", "recherche": "research / search", "traces": "traces / signs", "vie": "life", "institution": "institution", "financière": "financial institution", "alloue": "allocates", "fonds": "funds", "substantiels": "substantial funds", "systèmes": "educational systems", "émergents": "emerging configurations", "périphérie": "outskirts / periphery", "clichés": "photos / images", "haute résolution": "high resolution prints", "composés": "compounds", "organiques": "organic compounds", "subventions": "subsidies / grants", "visent": "target", "résorber": "to absorb / fix", "inégalités": "inequalities", "scolaires": "scholastic inequalities",
+            "garçon": "boy", "onze": "eleven", "ans": "years old", "habite": "lives", "oncle": "uncle", "tante": "aunt", "sévères": "strict", "chambre": "room", "sous": "under", "l'escalier": "the stairs", "facteur": "postman", "courrier": "mail", "lettre": "letter", "étrange": "strange", "lourde": "heavy", "encre": "ink", "verte": "green", "colère": "anger", "jette": "throws", "feu": "fire", "lendemain": "next day", "quelque": "some", "chose": "thing", "incroyable": "incredible", "cuisine": "kitchen", "peur": "fear", "quitter": "to leave", "cabane": "cabin", "secrète": "secret", "île": "island", "loin": "far", "ville": "city", "nuit": "night", "vent": "wind", "pluie": "rain", "minuit": "midnight", "pile": "sharp", "brise": "breaks", "homme": "man", "énorme": "huge", "barbe": "beard", "noire": "black", "yeux": "eyes", "gentils": "kind", "sourit": "smiles", "sorcier": "wizard", "rit": "laughs", "vrai": "true", "heureux": "happy", "accepter": "to accept", "cours": "classes", "commencent": "start", "étudier": "to study", "balais": "brooms", "volants": "flying", "formules": "spells", "terrifiés": "terrified", "silencieux": "silent", "prêt": "ready", "va": "go", "impitoyable": "ruthless", "chef": "leader", "guerre": "war", "tribus": "tribes", "unir": "to unite", "mongolie": "mongolia", "froid": "cold", "pauvre": "poor", "ennemi": "enemy", "tue": "kills", "père": "father", "famille": "family", "doit": "must", "forêt": "forest", "manger": "to eat", "grandit": "grows up", "devient": "becomes", "fort": "strong", "intelligent": "intelligent", "gagne": "wins", "batailles": "battles", "soldats": "soldiers", "écoutent": "listen to", "nom": "name", "signifie": "means", "océan": "ocean"
+        };
+
+        const db = {
+            story: {
+                1: {
+                    title: "Le Garçon de l'Escalier",
+                    A1: `Thomas est un <b>garçon</b> de <b>onze</b> <b>ans</b>. Thomas <b>habite</b> avec son <b>oncle</b> et sa <b>tante</b> très <b>sévères</b>. Thomas dort dans une petite <b>chambre</b> <b>sous</b> <b>l'escalier</b>.<br><br>Le matin de son anniversaire, le <b>facteur</b> apporte le <b>courrier</b>. Il y a une <b>lettre</b> <b>étrange</b> écrite en <b>encre</b> <b>verte</b>. L'oncle est en <b>colère</b> et <b>jette</b> la lettre dans le <b>feu</b>. Le <b>lendemain</b>, cinquante lettres volent dans la <b>cuisine</b> ! Ils décident de <b>quitter</b> la maison pour une <b>cabane</b> sur une <b>île</b> <b>loin</b> de la <b>ville</b>.<br><br>À <b>minuit</b> <b>pile</b>, un <b>homme</b> <b>énorme</b> avec une <b>barbe</b> <b>noire</b> entre. Il <b>sourit</b> : "Tu es un <b>sorcier</b>, Thomas."`,
+                    A2: `Thomas est un garçon de onze ans sans parents. Il demeure chez son oncle Henri et sa tante Monique, qui sont incroyablement strictes. Thomas dort dans une étroite chambre sous l'escalier.<br><br>Le jour de son anniversaire, le facteur distribue le courrier. L'oncle Henri remarque une enveloppe épaisse en papier jaune, destinée à Thomas. L'oncle Henri, devient furieux, refuse de la montrer à Thomas et la brûle immédiatement dans la cheminée.<br><br>Pourtant, le lendemain, un phénomène étrange se produit : des dizaines de lettres identiques arrivent au fond de la cuisine.`,
+                    B1: `Thomas est un orphelin de onze ans, élevé par des tuteurs dépourvus d'imagination débordante, qui l'ont relégué dans une chambre sous l'escalier, le condamnant à une existence monotone.<br><br>Cependant, le matin de son anniversaire, cette routine est complètement bouleversée. Lors de la distribution du courrier, une lettre parvient à la maison. C'est un parchemin insolite, lourd, écrit à l'encre émeraude. L'oncle Henri, hors de lui, la consume aussitôt dans l'âtre.`,
+                    C1: `Thomas, jeune orphelin de onze ans, avait été recueilli par son oncle paternel et sa tante, des individus austères et pragmatiques, bannissant le moindre fantasme de leur foyer. Le garçon passait ses nuits dans un étroit réduit sous l'escalier, menant une existence aussi triste que morose.<br><br>Cependant, le matin de son anniversaire, la monotonie de ce cadre fut brisée par l'arrivée du courrier matinal. Parmi les factures se trouvait un manuscrit mystérieux, lourd, soigneusement calligraphié à l'encre émeraude. Pris d'un élan de panique, son oncle enflamme la missive dans l'âtre.`,
+                    Fluide: `Thomas, orphelin de onze ans, ployait sous le joug d'un oncle et d'une tante d'une rigidité toute provinciale, imperméables à la moindre once de merveilleux. Confiné dans un placard exigu sous l'escalier, l'enfant s'accommodait tant bien que mal d'une routine oppressante et dénuée d'éclat.<br><br>Le jour de son anniversaire marqua pourtant une rupture définitive. Le pli postal recelait ce matin-là un parchemin d'un vert insolite, scellé de cire lourde. Son tuteur, saisi d'une fureur mêlée d'effroi, s'empressa de le jeter aux flammes afin d'étouffer un secret manifestement menaçant.`,
+                    Eng_A1: "Thomas is an eleven-year-old boy. Thomas lives with his very strict uncle and aunt. Thomas sleeps in a small room under the stairs...",
+                    Eng_A2: "Thomas is an eleven-year-old boy without parents. He resides at his uncle Henri and aunt Monique's house, who are incredibly strict...",
+                    Eng_B1: "Thomas is an eleven-year-old orphan, raised by guardians devoid of vivid imagination, who relegated him to a room under the stairs...",
+                    Eng_C1: "Thomas, a young eleven-year-old orphan, had been taken in by his paternal uncle and aunt, austere and pragmatic individuals...",
+                    Eng_Fluide: "Thomas, an eleven-year-old orphan, buckled under the yoke of an uncle and aunt of provincial rigidity, impervious to the slightest wonder..."
+                },
+                2: {
+                    title: "L'Ascension de Temüjin",
+                    A1: `Temüjin est un homme <b>impitoyable</b>. C'est le grand <b>chef</b> de <b>guerre</b> qui va <b>unir</b> les <b>tribus</b> de <b>Mongolie</b>. Quand il est enfant, sa vie est très dure. Il fait <b>froid</b> et sa famille est très <b>pauvre</b>. Un clan <b>ennemi</b> <b>tue</b> son <b>père</b>. Le jeune Temüjin <b>doit</b> chasser dans la <b>forêt</b> pour <b>manger</b>. Il <b>grandit</b>, <b>gagne</b> des <b>batailles</b> and prend le <b>nom</b> de Genghis Khan, qui <b>signifie</b> "chef de l'<b>océan</b>".`,
+                    A2: `Temüjin est un chef de guerre redoutable qui réussit à unifier les tribus nomades des steppes de Mongolie. Son enfance est marquée par des privations cruelles. Un clan rival assassine son père alors qu'il n'est qu'un enfant. Sa famille, abandonnée, est contrainte de survivre dans des conditions extrêmes.`,
+                    B1: `Avant de devenir Genghis Khan, le guerrier impitoyable capable de fédérer les clans rivaux, l'homme s'appelait Temüjin. Son parcours fut marqué par l'assassinat de son père par un clan rival, un drame qui précipite les siens dans la misère la plus totale. Face aux hivers impitoyables, le jeune garçon développe un sens aigu de la survie.`,
+                    C1: `L'histoire de l'Asie fut bouleversée par l'avènement de Temüjin, connu sous le nom de Genghis Khan. Né au sein d'un univers nomade fragmenté et violent, il dut faire face à l'exil après l'empoisonnement de son père. Rejetée par son propre clan, sa famille fut condamnée à errer dans des landes désolées, subsistant de racines et de petit gigier.`,
+                    Fluide: `L'épopée de Temüjin, s'extirpant des limbes de l'anonymat pour s'ériger en figure de proue de l'Empire mongol, demeure l'une des trajectoires les plus fulgurantes de l'histoire humaine. Orphelin d'un chef de clan empoisonné par les Tatars, il connot la déchéance, la captivité, et les affres d'une survie précaire au cœur d'une nature sibérienne hostile.`,
+                    Eng_A1: "Temüjin is a ruthless man. He is the great warlord who will unite the tribes of Mongolia. When he is a child, his life is very hard...",
+                    Eng_A2: "Temüjin is a fearsome warlord who succeeds in unifying the nomadic tribes of the Mongolian steppes. His childhood is marked by cruel hardships...",
+                    Eng_B1: "Before becoming Genghis Khan, the ruthless warrior capable of unifying rival clans, the man was named Temüjin. His path was marked by assassination...",
+                    Eng_C1: "The history of Asia was overturned by the advent of Temüjin, famously known as Genghis Khan. Born within a fragmented and violent nomadic universe...",
+                    Eng_Fluide: "The epic of Temüjin, clawing his way out of the limbo of anonymity to establish himself as the figurehead of the Mongol Empire, remains one of history's..."
+                }
+            },
+            news: {
+                1: {
+                    title: "Europe : Dernières 24 Heures",
+                    A1: `Un nouvel <b>accord</b> pour le <b>climat</b> est <b>signé</b> à <b>Paris</b>. Beaucoup de <b>pays</b> <b>travaillent</b> <b>ensemble</b> pour <b>réduire</b> la <b>pollution</b>.<br><br>En plus, un <b>nouveau</b> <b>train</b> <b>rapide</b> <b>connecte</b> maintenant <b>Bruxelles</b> et <b>Berlin</b>. Le <b>voyage</b> <b>prend</b> seulement cinq <b>heures</b>. Enfin, un grand <b>sommet</b> <b>européen</b> <b>débute</b> ce soir. Les <b>dirigeants</b> discutent de la <b>sécurité</b> et de l'<b>énergie</b>.`,
+                    A2: `Un traité environnemental majeur vient d'être ratifié à Paris, engageant les nations européennes dans un effort collectif pour restreindre la pollution industrielle.<br><br>Parallèlement, la nouvelle liaison ferroviaire à grande vitesse reliant Bruxelles à Berlin a été inaugurée ce matin, raccourcissant considérablement les temps de transport transfrontaliers. Ce soir, l'ouverture officielle du sommet de l'Union européenne mobilise les chefs d'État autour des problématiques énergétiques urgentes.`,
+                    B1: `La scène diplomatique européenne est marquée aujourd'hui par la ratification historique des nouveaux amendements de l'Accord de Paris, visant à imposer des réductions drastiques d'émissions de carbone aux industries lourdes.<br><br>Sur le plan des infrastructures, la mise en service d'un axe ferroviaire direct entre Bruxelles et Berlin promet de révolutionner les déplacements écologiques sur le vieux continent. Par ailleurs, les chefs d'État se rassemblent actuellement pour un sommet extraordinaire axé sur la sécurisation des approvisionnements d'énergie.`,
+                    C1: `L'actualité continentale est dominée par l'aboutissement des négociations environnementales à Paris, où une coalition d'États a paraphé un protocole contraignant pour accélérer le démantèlement des centrales à charbon.<br><br>Cette avancée écologique coïncide avec l'inauguration en grande pompe du corridor ferroviaire transcontinental connectant Bruxelles à Berlin, un projet d'ingénierie publique conçu pour pallier l'hégémonie des liaisons aériennes court-courriers. Simultanément, le sommet des chefs d'État s'ouvre dans un climat de tension géopolitique, focalisé sur la résilience énergétique.`,
+                    Fluide: `Les chancelleries européennes entérinent aujourd'hui à Paris un tournant écologique d'envergure, matérialisé par la signature d'un avenant structurel aux traités climatiques antérieurs, destiné à accélérer la décarbonation industrielle.<br><br>Cette dynamique se double d'une percée majeure dans l'intégration territoriale avec le voyage inaugural du tronçon ferroviaire à haute performance reliant Bruxelles à Berlin, réduisant le trajet à une simple formalité de cinq heures. C'est dans cette conjoncture interconnectée que s'ouvre le Conseil européen extraordinaire, où s'articulent de délicates tractations sur l'autonomie stratégique.`,
+                    Eng_A1: "A new climate agreement is signed in Paris. Many countries are working together to reduce pollution. In addition, a new fast train connects Brussels and Berlin now. The trip takes only five hours. Finally, a great European summit begins tonight...",
+                    Eng_A2: "A major environmental treaty has just been ratified in Paris, committing European nations to a collective effort to restrict industrial pollution. Meanwhile, the new high-speed rail link connecting Brussels to Berlin was inaugurated...",
+                    Eng_B1: "The European diplomatic scene is marked today by the historic ratification of the new amendments to the Paris Agreement, aiming to impose drastic carbon emission reductions. In infrastructure, the deployment of a direct rail link...",
+                    Eng_C1: "Continental news is dominated by the culmination of environmental negotiations in Paris, where a coalition of states signed a binding protocol. This coincides with the inauguration of the transcontinental railway corridor...",
+                    Eng_Fluide: "European chancelleries are today confirming a major ecological shift in Paris, materialized by the signature of a structural amendment to previous climate treaties. This dynamic is coupled with a major breakthrough in regional integration..."
+                },
+                2: {
+                    title: "Infos du Monde : Dernières 24 Heures",
+                    A1: `Un <b>vaisseau</b> <b>spatial</b> <b>arrive</b> sur <b>Mars</b> aujourd'hui. Il <b>envoie</b> des <b>photos</b> de la <b>planète</b> rouge.<br><br>En Asie, la <b>Banque</b> <b>mondiale</b> <b>donne</b> de l'<b>argent</b> pour construire des <b>écoles</b> et <b>aider</b> les <b>enfants</b> pauvres. Aux États-Unis, les grandes entreprises de technologie annoncent de nouveaux outils d'intelligence artificielle pour les téléphones portables.`,
+                    A2: `Une sonde spatiale internationale a atterri avec succès sur Mars ce matin, transmettant immédiatement des données scientifiques et des images panoramiques de la surface rocheuse.<br><br>Dans le secteur économique, la Banque mondiale a validé un financement majeur destiné à moderniser le système éducatif dans plusieurs provinces rurales d'Asie du Sud-Est. À San Francisco, les géants de la tech dévoilent de nouvelles applications mobiles automatisées.`,
+                    B1: `L'exploration spatiale franchit un nouveau cap avec l'atterrissage d'une sonde automatique sur le sol de Mars, chargée d'analyser la composition minérale et de rechercher des traces d'eau fossile.<br><br>Sur le plan humanitaire et financier, une subvention substantielle accordée par la Banque mondiale permettra le déploiement d'infrastructures scolaires modernes en Asie. Pendant ce temps, la Silicon Valley s'agite autour du lancement d'architectures d'IA embarquées de nouvelle génération.`,
+                    C1: `Les yeux du monde scientifique sont rivés sur Mars, où un atterrisseur robotisé a entamé sa mission d'exploration exbiologique, envoyant des clichés haute résolution de formations géologiques complexes.<br><br>Cette prouesse technologique s'accompagne d'un rééquilibrage socio-économique en Asie, grâce à l'allocation par la Banque mondiale de fonds d'urgence visant à résorber les inégalités scolaires. Parallèlement, l'industrie logicielle américaine franchit un jalon en intégrant des réseaux de neurones génératifs au cœur des puces de smartphones.`,
+                    Fluide: `L'odyssée spatiale contemporaine s'enrichit d'un jalon capital avec la sédentarisation d'un laboratoire mobile automatisé sur les plaines de Mars, ouvrant un chapitre d'analyses spectroscopiques à la recherche de composés organiques.<br><br>Sur l'échiquier macroéconomique, les instances de la Banque mondiale ont débloqué une enveloppe budgétaire d'envergure pour restructurer les systèmes éducatifs obsolètes des économies émergentes. Simultanément, le marché technologique mondial subit une secousse systémique suite à la démonstration d'IA génératives exécutées localement en silicium.`,
+                    Eng_A1: "A spaceship arrives on Mars today. It sends photos of the red planet. In Asia, the World Bank gives money to build schools and help poor children. In the United States, big technology companies announce new tools...",
+                    Eng_A2: "An international space probe landed successfully on Mars this morning, immediately transmitting scientific data and panoramic images. In the economic sector, the World Bank validated major funding...",
+                    Eng_B1: "Space exploration crosses a new milestone with the landing of an automated probe on Martian soil, tasked with analyzing mineral composition. On the humanitarian side, a substantial subsidy from the World Bank...",
+                    Eng_C1: "The eyes of the scientific world are fixed on Mars, where a robotic lander has begun its exobiological exploration mission, sending high-resolution prints. This is accompanied by socio-economic rebalancing in Asia...",
+                    Eng_Fluide: "The contemporary space odyssey is enriched by a crucial milestone with the deployment of an automated mobile laboratory on Mars. On the macroeconomic chessboard, the World Bank has unlocked an extensive budget..."
+                }
+            }
+        };
+
+        // Navigation Tab Switching Engine
+        function switchTab(tabId, element) {
+            activeTabId = tabId;
+            document.querySelectorAll('.menu-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+            
+            if (tabId === 'view-flashcards') {
+                renderFlashcardsDeck();
+            }
+        }
+
+        // Reader Interface Triggers
+        function launchReader(type, id) {
+            activeReaderType = type;
+            activeItemId = id;
+            
+            document.getElementById(activeTabId).classList.remove('active');
+            document.getElementById('view-reader').classList.add('active');
+            
+            // Sync current configuration state
+            document.getElementById('level-slider').value = currentLevel;
+            document.getElementById('reader-translation-panel').style.display = 'none';
+            
+            executeContentParse(type, id, currentLevel);
+        }
+
+        function exitReader() {
+            document.getElementById('view-reader').classList.remove('active');
+            document.getElementById(activeTabId).classList.add('active');
+        }
+
+        // Core UI Linguistic Parser
+        function executeContentParse(type, id, levelIndex) {
+            const levelKey = levelsMap[levelIndex];
+            document.getElementById('level-tag').innerText = levelKey;
+            
+            const targetData = db[type][id];
+            document.getElementById('reader-title-display').innerText = targetData.title;
+            
+            let rawText = targetData[levelKey];
+            
+            // Text processor replacing custom <b> definitions with functional span triggers
+            let processedText = rawText.replace(/<b>(.*?)<\/b>/g, function(match, word) {
+                let lookupKey = word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()""'«»]/g,"").trim();
+                let translationValue = dictionary[lookupKey] || "Word definition translation logged";
+                return `<span class="w" data-fr="${lookupKey}" data-en="${translationValue}">${word}</span>`;
+            });
+            
+            document.getElementById('reader-body-display').innerHTML = processedText;
+            document.getElementById('reader-translation-panel').innerText = targetData["Eng_" + levelKey];
+            
+            bindWordInteractions();
+        }
+
+        function bindWordInteractions() {
+            document.querySelectorAll('span.w').forEach(element => {
+                element.addEventListener('click', function() {
+                    const frWord = this.getAttribute('data-fr');
+                    const enWord = this.getAttribute('data-en');
+                    
+                    // Display overlay response toast
+                    triggerToast(`💡 <b>${this.innerText}</b> = ${enWord}`);
+                    
+                    // Add entry to user's personalized flashcard arrays if it doesn't exist
+                    const existingEntry = savedVocabularyDeck.find(item => item.fr === frWord);
+                    if (!existingEntry) {
+                        savedVocabularyDeck.push({ fr: frWord, en: enWord });
+                        document.getElementById('global-card-count').innerText = savedVocabularyDeck.length;
+                    }
+                });
+            });
+        }
+
+        function toggleTranslationBox() {
+            const panel = document.getElementById('reader-translation-panel');
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Flashcard State Management and Rendering Engine
+        let trackingCardIndex = 0;
+        
+        function renderFlashcardsDeck() {
+            const wrapper = document.getElementById('deck-wrapper');
+            if (savedVocabularyDeck.length === 0) {
+                wrapper.innerHTML = `
+                    <div class="empty-deck">
+                        <div style="font-size:40px; margin-bottom:15px;">🎴</div>
+                        <p>Votre paquet est vide.<br><b>Comment créer des cartes ?</b> Pendant que vous lisez une histoire ou une actualité, cliquez sur les mots soulignés pour les ajouter automatiquement ici !</p>
+                    </div>`;
+                return;
+            }
+            
+            if (trackingCardIndex >= savedVocabularyDeck.length) {
+                trackingCardIndex = 0;
+            }
+
+            const currentItem = savedVocabularyDeck[trackingCardIndex];
+            wrapper.innerHTML = `
+                <div class="flashcard-container">
+                    <div class="card-counter">Fiche ${trackingCardIndex + 1} sur ${savedVocabularyDeck.length}</div>
+                    <div class="flashcard" id="active-flashcard-element" onclick="flipActiveCard()">
+                        <div class="word-surface" id="card-front-text">${currentItem.fr}</div>
+                        <div class="word-translation" id="card-back-text">${currentItem.en}</div>
+                        <div class="card-hint" id="card-hint-text">Cliquez pour révéler</div>
+                    </div>
+                    <div class="card-controls">
+                        <button class="card-btn btn-prev" onclick="shiftActiveCard(-1)">Précédent</button>
+                        <button class="card-btn btn-next" onclick="shiftActiveCard(1)">Suivant</button>
+                    </div>
+                </div>`;
+        }
+
+        function flipActiveCard() {
+            const backText = document.getElementById('card-back-text');
+            const hintText = document.getElementById('card-hint-text');
+            
+            if (backText.style.display === 'block') {
+                backText.style.display = 'none';
+                hintText.innerText = "Cliquez pour révéler";
+            } else {
+                backText.style.display = 'block';
+                hintText.innerText = "Cliquez pour masquer";
+            }
+        }
+
+        function shiftActiveCard(direction) {
+            trackingCardIndex += direction;
+            if (trackingCardIndex < 0) trackingCardIndex = savedVocabularyDeck.length - 1;
+            if (trackingCardIndex >= savedVocabularyDeck.length) trackingCardIndex = 0;
+            renderFlashcardsDeck();
+        }
+
+        // Notification Helper Engine
+        function triggerToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // Monitor difficulty slider mutations
+        document.getElementById('level-slider').addEventListener('input', function() {
+            currentLevel = parseInt(this.value);
+            executeContentParse(activeReaderType, activeItemId, currentLevel);
+        });
+    </script>
+</body>
+</html>
